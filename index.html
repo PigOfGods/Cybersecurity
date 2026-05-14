@@ -4,16 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Security Training Hub</title>
-    <script>
-        // Suppress Tailwind CDN production warning
-        if (typeof window !== 'undefined') {
-            const origWarn = console.warn;
-            console.warn = (...args) => {
-                if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
-                origWarn.apply(console, args);
-            };
-        }
-    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;700;800&display=swap');
@@ -75,39 +65,32 @@
         .arena-pulse { position: absolute; border-radius: 9999px; border: 2px solid rgba(251, 191, 36, 0.8); box-shadow: 0 0 24px rgba(251, 191, 36, 0.35); transform: translate(-50%, -50%); pointer-events: none; animation: arenaPulse 0.45s ease-out forwards; }
         .upgrade-card-icon { width: 54px; height: 54px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(148, 163, 184, 0.18); box-shadow: inset 0 0 14px rgba(15, 23, 42, 0.75); flex-shrink: 0; }
         .synergy-chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.18); background: rgba(15, 23, 42, 0.82); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; line-height: 1.2; }
+        .arena-mobile-controls { display: none; align-items: center; justify-content: center; padding-top: 10px; }
+        .arena-joystick-base { width: 112px; height: 112px; border-radius: 9999px; background: rgba(56, 189, 248, 0.12); border: 2px solid rgba(56, 189, 248, 0.35); position: relative; box-shadow: inset 0 0 20px rgba(15, 23, 42, 0.85); touch-action: none; }
+        .arena-joystick-knob { width: 42px; height: 42px; border-radius: 9999px; background: rgba(56, 189, 248, 0.62); border: 2px solid rgba(224, 242, 254, 0.55); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.45); }
+        #arena-levelup-overlay, #arena-levelup-overlay * { touch-action: auto; }
+        #arena-levelup-overlay button, #arena-question-options button, #arena-ability-options button, #arena-levelup-q-options button, #arena-upgrade-grid button, #password-options button, #password-trivia-options button { touch-action: manipulation; }
         @keyframes arenaPulse { from { opacity: 0.95; width: 20px; height: 20px; } to { opacity: 0; width: 180px; height: 180px; } }
         @keyframes arenaShieldWave { from { opacity: 0.8; width: 18px; height: 18px; } to { opacity: 0; width: 110px; height: 110px; } }
         @keyframes arenaOrb { from { transform: translate(-50%, -50%) scale(0.95); } to { transform: translate(-50%, -50%) scale(1.08); } }
         @keyframes virusGlitch { 0%, 100% { filter: hue-rotate(0deg); transform: translate(-50%, -50%) skew(0deg, 0deg); } 18% { transform: translate(calc(-50% + 1px), calc(-50% - 1px)) skew(3deg, 0deg); } 21% { transform: translate(calc(-50% - 2px), calc(-50% + 1px)) skew(-4deg, 1deg); } 24% { transform: translate(-50%, -50%) skew(0deg, 0deg); } 60% { filter: hue-rotate(18deg); } }
         @keyframes virusGlitchFast { 0%, 100% { transform: translate(-50%, -50%) scale(1); } 30% { transform: translate(calc(-50% + 2px), calc(-50% - 1px)) scale(1.12); } 34% { transform: translate(calc(-50% - 2px), calc(-50% + 1px)) scale(0.92); } 38% { transform: translate(-50%, -50%) scale(1); } }
         @keyframes virusGlitchSneak { 0%, 100% { opacity: 0.95; transform: translate(-50%, -50%); } 35% { opacity: 0.35; transform: translate(calc(-50% + 3px), calc(-50% - 1px)); } 40% { opacity: 1; transform: translate(-50%, -50%); } }
-        .arena-enemy-hit { animation: enemyHitFlash 0.35s ease-out forwards !important; }
-        @keyframes enemyHitFlash { 0% { filter: brightness(1) saturate(1); } 15% { filter: brightness(3.5) saturate(0) sepia(1) hue-rotate(-20deg); background: #ff0000 !important; box-shadow: 0 0 28px #ff0000, 0 0 50px #ff000088 !important; } 100% { filter: brightness(1) saturate(1); } }
-        .arena-bouncing-ball { width: 10px; height: 10px; border-radius: 9999px; background: radial-gradient(circle at 35% 35%, #fde68a, #f59e0b 70%); box-shadow: 0 0 14px rgba(245,158,11,0.95), 0 0 4px #fff; }
-        .arena-enemy-miniboss { width: 40px; height: 40px; border-radius: 8px; background: radial-gradient(circle at 35% 35%, #fde68a, #f59e0b 40%, #92400e 100%); box-shadow: 0 0 28px rgba(245,158,11,0.85), 0 0 12px rgba(255,255,255,0.3); border: 2px solid rgba(253,230,138,0.7); animation: virusGlitch 0.8s steps(2) infinite; color: rgba(253,230,138,0.9); }
-        .arena-enemy-boss { width: 60px; height: 60px; border-radius: 12px; background: radial-gradient(circle at 35% 35%, #f9a8d4, #ec4899 40%, #500724 100%); box-shadow: 0 0 40px rgba(236,72,153,0.9), 0 0 20px rgba(255,255,255,0.4); border: 3px solid rgba(249,168,212,0.8); animation: bossGlitch 0.6s steps(2) infinite; color: rgba(249,168,212,0.95); }
-        @keyframes bossGlitch { 0%,100%{filter:hue-rotate(0deg) brightness(1);transform:translate(-50%,-50%) scale(1)} 20%{transform:translate(calc(-50% + 2px),calc(-50% - 2px)) scale(1.05);filter:hue-rotate(30deg) brightness(1.3)} 25%{transform:translate(calc(-50% - 3px),calc(-50% + 2px)) scale(0.97);filter:hue-rotate(-20deg) brightness(0.9)} 30%{transform:translate(-50%,-50%) scale(1);filter:hue-rotate(0deg)} }
-        .boss-health-bar { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 80%; height: 6px; background: rgba(0,0,0,0.5); border-radius: 3px; overflow: hidden; }
-        .boss-health-fill { height: 100%; background: linear-gradient(90deg, #ec4899, #f9a8d4); transition: width 0.2s; }
-        .miniboss-health-bar { position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); width: 70%; height: 4px; background: rgba(0,0,0,0.5); border-radius: 2px; overflow: hidden; }
-        .miniboss-health-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #fde68a); transition: width 0.2s; }
-        .levelup-overlay { position: absolute; inset: 0; background: #020617; display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 20; overflow-y: auto; }
-        #arena-layer { transition: none; }
-        #arena-layer.paused-hidden { visibility: hidden; }
+        .levelup-overlay { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.92); display: flex; align-items: center; justify-content: center; padding: 24px; z-index: 20; }
         @media (max-width: 1279px) {
             #app { max-width: 100%; }
-            .arena-stage { min-height: 420px; }
+            .arena-stage { min-height: 400px; }
         }
         @media (max-width: 900px) {
-            .arena-stage { min-height: 360px; }
-            .levelup-overlay { padding: 12px; align-items: flex-start; }
+            .arena-stage { min-height: 340px; }
+            .levelup-overlay { padding: 14px; align-items: flex-start; overflow-y: auto; }
         }
         @media (max-width: 640px) {
-            .arena-stage { min-height: 300px; height: 55vw; max-height: 400px; }
+            .arena-stage { min-height: 390px; height: 74vw; max-height: 520px; }
             .upgrade-card-icon { width: 46px; height: 46px; }
             .synergy-chip { padding: 6px 10px; font-size: 10px; }
+            .arena-mobile-controls { display: flex; }
             main { padding: 12px !important; }
-            .levelup-overlay { padding: 8px; }
         }
     </style>
 </head>
@@ -127,7 +110,7 @@
             </div>
         </header>
 
-        <main class="p-3 sm:p-6 md:p-10">
+        <main class="p-6 md:p-10">
             <div id="game-container">
                 <div id="home-view" class="space-y-12 py-10 fade-in">
                     <div class="text-center space-y-4">
@@ -430,6 +413,18 @@
                     </div>
                 </div>
 
+                <div id="password-trivia-view" class="hidden space-y-8 fade-in">
+                    <div class="bg-slate-900 p-8 rounded-xl border border-amber-500/30 space-y-6">
+                        <div class="flex items-center gap-3">
+                            <div class="px-2 py-1 bg-amber-500/20 text-amber-400 text-[10px] font-bold rounded uppercase">Password Check</div>
+                            <h3 class="text-xl font-bold text-white">Follow-up Question</h3>
+                        </div>
+                        <p id="password-trivia-q" class="text-lg text-slate-300"></p>
+                        <div id="password-trivia-context" class="text-sm text-slate-500"></div>
+                        <div id="password-trivia-options" class="grid grid-cols-1 gap-3"></div>
+                    </div>
+                </div>
+
                 <div id="arena-theme-view" class="hidden space-y-8 fade-in">
                     <div class="bg-slate-900/80 border border-cyan-500/30 p-8 rounded-xl space-y-8">
                         <div class="space-y-3 text-center">
@@ -466,46 +461,47 @@
                     </div>
                 </div>
 
-                <div id="arena-game-view" class="hidden space-y-4 fade-in">
-                    <div class="flex flex-col 2xl:grid 2xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.85fr)] gap-4 items-start">
+                <div id="arena-game-view" class="hidden space-y-6 fade-in">
+                    <div class="grid grid-cols-1 2xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.85fr)] gap-6 items-start">
                         <div class="space-y-4">
-                            <div id="arena-hud-bar" class="flex flex-col sm:flex-row sm:justify-between gap-2 sm:items-center bg-slate-900/80 px-4 py-3 rounded-lg border border-slate-800">
-                                <div class="text-xs font-bold uppercase tracking-widest text-emerald-400">Integrity: <span id="arena-health" class="text-white">100</span>%</div>
-                                <div class="text-xs font-bold uppercase tracking-widest text-yellow-400">XP: <span id="arena-xp" class="text-white">0</span>/<span id="arena-next-xp" class="text-white">6</span></div>
-                                <div class="text-xs font-bold uppercase tracking-widest text-cyan-400">Level: <span id="arena-level-disp" class="text-white">1</span></div>
-                                <div class="text-xs font-bold uppercase tracking-widest text-slate-400">Time: <span id="arena-time" class="text-white">0s</span></div>
+                            <div class="flex flex-col md:flex-row md:justify-between gap-3 md:items-center bg-slate-900/50 p-4 rounded-lg border border-slate-800">
+                                <div class="text-sm font-bold uppercase tracking-widest text-cyan-400">Arena Score: <span id="arena-score" class="text-white">0</span>/10000</div>
+                                <div class="text-sm font-bold uppercase tracking-widest text-emerald-400">Integrity: <span id="arena-health" class="text-white">100</span></div>
+                                <div class="text-sm font-bold uppercase tracking-widest text-yellow-400">XP: <span id="arena-xp" class="text-white">0</span>/<span id="arena-next-xp" class="text-white">6</span></div>
+                                <div class="text-sm font-bold uppercase tracking-widest text-slate-400">Survival Time: <span id="arena-time" class="text-white">0s</span></div>
                             </div>
                             <div class="arena-stage" id="arena-stage">
                                 <div class="arena-grid"></div>
                                 <div id="arena-layer"></div>
                                 <div id="arena-levelup-overlay" class="hidden levelup-overlay"></div>
-                                <!-- Mobile virtual joystick -->
-                                <div id="arena-joystick-zone" style="display:none;position:absolute;bottom:18px;left:18px;z-index:15;touch-action:none;">
-                                    <div id="arena-joystick-base" style="width:90px;height:90px;border-radius:50%;background:rgba(56,189,248,0.15);border:2px solid rgba(56,189,248,0.4);position:relative;">
-                                        <div id="arena-joystick-knob" style="width:36px;height:36px;border-radius:50%;background:rgba(56,189,248,0.6);border:2px solid rgba(255,255,255,0.5);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 12px rgba(56,189,248,0.5);"></div>
+                            </div>
+                            <div id="arena-mobile-controls" class="arena-mobile-controls">
+                                <div>
+                                    <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-400 text-center mb-2">Mobile Movement</div>
+                                    <div id="arena-joystick-base" class="arena-joystick-base">
+                                        <div id="arena-joystick-knob" class="arena-joystick-knob"></div>
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-xs text-slate-500 mono hidden sm:block">Move with WASD. `Kernel Ping` always fires automatically. Utilities auto-cast, linked pairs unlock a secret power, and the run lasts until your system integrity hits zero.</p>
-                            <p class="text-xs text-slate-500 mono sm:hidden">Drag the joystick to move. Your `Kernel Ping` fires automatically.</p>
+                            <p class="text-xs text-slate-500 mono">Move with WASD. `Kernel Ping` always fires automatically. Utilities auto-cast, linked pairs unlock a secret power, and the run lasts until your system integrity hits zero.</p>
                         </div>
-                        <div class="space-y-3 min-w-0">
-                            <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-4 space-y-3">
+                        <div class="space-y-4 min-w-0">
+                            <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-5 space-y-4">
                                 <div>
-                                    <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-400 mb-1">Doctrine</div>
-                                    <div id="arena-theme-label" class="text-white font-bold uppercase text-sm"></div>
+                                    <div class="text-[10px] uppercase tracking-[0.2em] text-cyan-400 mb-2">Doctrine</div>
+                                    <div id="arena-theme-label" class="text-white font-bold uppercase"></div>
                                 </div>
                                 <div>
-                                    <div class="text-[10px] uppercase tracking-[0.2em] text-blue-400 mb-1">Defense Readout</div>
-                                    <div id="arena-theme-summary" class="text-xs text-slate-300"></div>
+                                    <div class="text-[10px] uppercase tracking-[0.2em] text-blue-400 mb-2">Defense Readout</div>
+                                    <div id="arena-theme-summary" class="text-sm text-slate-300"></div>
                                 </div>
                                 <div>
-                                    <div class="text-[10px] uppercase tracking-[0.2em] text-emerald-400 mb-1">Active Utilities</div>
-                                    <div id="arena-ability-list" class="grid grid-cols-2 2xl:grid-cols-1 gap-2 text-xs text-slate-300"></div>
+                                    <div class="text-[10px] uppercase tracking-[0.2em] text-emerald-400 mb-2">Active Utilities</div>
+                                    <div id="arena-ability-list" class="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-1 gap-2 text-sm text-slate-300"></div>
                                 </div>
                                 <div>
-                                    <div class="text-[10px] uppercase tracking-[0.2em] text-yellow-400 mb-1">Combat Log</div>
-                                    <div id="arena-log" class="space-y-1 text-xs text-slate-400 max-h-32 2xl:max-h-48 overflow-y-auto break-words"></div>
+                                    <div class="text-[10px] uppercase tracking-[0.2em] text-yellow-400 mb-2">Combat Log</div>
+                                    <div id="arena-log" class="space-y-2 text-xs text-slate-400 max-h-48 overflow-y-auto break-words"></div>
                                 </div>
                             </div>
                         </div>
@@ -516,7 +512,7 @@
                     <div id="win-header-container">
                         <h2 id="win-title" class="text-5xl font-black text-emerald-400 uppercase tracking-tighter">Mission Accomplished</h2>
                     </div>
-                    <p class="text-slate-400 text-xl">Result: <span id="final-score" class="text-emerald-400 font-bold">0</span></p>
+                    <p class="text-slate-400 text-xl">Final Security Rating: <span id="final-score" class="text-emerald-400 font-bold">0</span></p>
                     <div id="best-player-tag" class="hidden px-4 py-2 bg-yellow-500 text-black font-black rounded uppercase text-sm animate-bounce">Best Player Ever!</div>
                     <div class="text-xl md:text-2xl mono text-white bg-emerald-500/10 p-8 border-2 border-emerald-500/50 rounded-2xl tracking-wide shadow-2xl" id="final-display-content"></div>
                     <button onclick="showHome()" class="px-12 py-4 border border-emerald-500 text-emerald-500 rounded-lg uppercase font-bold hover:bg-emerald-500 hover:text-white transition-all">Return to Hub</button>
@@ -967,6 +963,19 @@
             { label: "Practically impossible", min: 60 * 60 * 24 * 365 * 1000000, max: Infinity }
         ];
 
+        const passwordTriviaBank = [
+            makeQuestion("What usually makes a password much harder to brute-force?", ["Making it shorter", "Reusing it everywhere", "Adding length and more character types", "Using your name"], 2, "Longer passwords with more possible characters create a much larger search space."),
+            makeQuestion("Why is password reuse dangerous?", ["It makes passwords easier to type", "One breach can expose multiple accounts", "It automatically disables MFA", "It only matters on phones"], 1, "Attackers often try stolen credentials on many sites."),
+            makeQuestion("What is the biggest strength of a long passphrase?", ["It is harder to remember", "It creates a very large number of possible guesses", "It removes the need for MFA", "It only works on some websites"], 1, "Length matters most because every extra character multiplies the search space."),
+            makeQuestion("Why do symbols and numbers help in a password?", ["They make the password public", "They shrink the search space", "They expand the character set attackers must guess from", "They stop phishing by themselves"], 2, "A larger character set gives each position more possible values."),
+            makeQuestion("What is credential stuffing?", ["Turning a password into a hash", "Trying leaked username-password pairs on other services", "Resetting every password monthly", "A browser autofill feature"], 1, "Credential stuffing works because people reuse passwords across accounts."),
+            makeQuestion("Why is MFA still useful even with a strong password?", ["It replaces passwords forever", "It adds another barrier if the password is stolen", "It makes links automatically safe", "It removes the need for unique passwords"], 1, "MFA helps protect the account even if someone gets the password."),
+            makeQuestion("Which password is generally stronger?", ["A short dictionary word", "A longer password with mixed character types", "Your pet's name plus 1", "The same password you use everywhere"], 1, "Length plus variety is much stronger than familiar short patterns."),
+            makeQuestion("What does a password manager help you do?", ["Memorize only weak passwords", "Use one reused password on every site", "Generate and store strong unique passwords", "Disable account recovery"], 2, "Password managers make unique strong passwords practical."),
+            makeQuestion("Why are common words weak password choices?", ["Attackers rarely test them", "They are too long", "Attackers often try dictionary-based guesses first", "They only work on laptops"], 2, "Common words and patterns are checked early in many cracking attacks."),
+            makeQuestion("What matters more for brute-force resistance?", ["Just adding one symbol to a short password", "Making the password meaningfully longer", "Using only uppercase letters", "Changing fonts in the login box"], 1, "Length usually improves brute-force resistance more than tiny complexity changes.")
+        ];
+
         const arenaThemes = {
             mixed: {
                 label: "Cross-Topic Response",
@@ -1112,14 +1121,21 @@
         let currentPasswordIndex = 0;
         let passwordScore = 0;
         let shuffledPasswordScenarios = [];
+        let usedPasswordTrivia = [];
+        let currentPasswordTrivia = null;
         let arenaThemeKey = "cipher";
         let arenaGateQuestion = null;
         let arenaQuestionPassed = false;
         let arenaLevelupCount = 0;
+        let arenaScore = 0;
         let arenaLoopId = null;
         let arenaKeyListenerBound = false;
         let arenaKeys = { w: false, a: false, s: false, d: false };
         let arenaState = null;
+        let arenaJoystickActive = false;
+        let arenaJoystickTouchId = null;
+        let arenaJoystickVector = { x: 0, y: 0 };
+        let arenaJoystickCleanup = null;
         let hasOpenedCipherStation = false;
         let hasOpenedPhishingStation = false;
         let hasOpenedPasswordStation = false;
@@ -1128,11 +1144,14 @@
             totalScore = 0;
             pScore = 0;
             passwordScore = 0;
+            arenaScore = 0;
             document.getElementById("global-score-display").innerText = "TOTAL SCORE: 0";
             const phishingScore = document.getElementById("phishing-score");
             if (phishingScore) phishingScore.innerText = "0";
             const passwordScoreEl = document.getElementById("password-score");
             if (passwordScoreEl) passwordScoreEl.innerText = "0";
+            const arenaScoreEl = document.getElementById("arena-score");
+            if (arenaScoreEl) arenaScoreEl.innerText = "0";
         }
 
         function clampScore() {
@@ -1539,6 +1558,8 @@
             currentPasswordIndex = 0;
             passwordScore = 0;
             shuffledPasswordScenarios = [...passwordScenarios].sort(() => 0.5 - Math.random());
+            usedPasswordTrivia = [];
+            currentPasswordTrivia = null;
             document.getElementById("password-score").innerText = "0";
             loadPasswordRound();
             showView("password-game-view");
@@ -1595,6 +1616,7 @@
             updateScore(delta);
             passwordScore = totalScore;
             document.getElementById("password-score").innerText = passwordScore;
+            currentPasswordTrivia = getNextPasswordTrivia();
 
             feedback.className = `rounded-xl border p-5 ${tone}`;
             feedback.innerHTML = `
@@ -1603,10 +1625,60 @@
                     <div class="text-sm text-slate-200">Estimated crack time: <span class="font-bold">${formatDuration(actualSeconds)}</span>.</div>
                     <div class="text-sm text-slate-200">Character set size: <span class="font-bold">${getPasswordCharsetSize(scenario)}</span>. Length: <span class="font-bold">${scenario.length}</span>.</div>
                     <div class="text-sm text-slate-300">${delta > 0 ? `Points earned: +${delta}` : `Penalty applied: ${delta}`}. Longer passwords with more character types create vastly more combinations.</div>
-                    <button onclick="nextPasswordRound()" class="px-5 py-3 rounded-lg bg-amber-600 text-white text-sm font-bold uppercase tracking-widest hover:bg-amber-500">Next Profile</button>
+                    <button onclick="loadPasswordTrivia()" class="px-5 py-3 rounded-lg bg-amber-600 text-white text-sm font-bold uppercase tracking-widest hover:bg-amber-500">Continue to Trivia</button>
                 </div>`;
             feedback.classList.remove("hidden");
             Array.from(document.getElementById("password-options").children).forEach(child => child.classList.add("pointer-events-none", "opacity-60"));
+        }
+
+        function getNextPasswordTrivia() {
+            const available = passwordTriviaBank.filter(question => !usedPasswordTrivia.includes(question.q));
+            const source = available.length ? available : passwordTriviaBank;
+            const selected = source[Math.floor(Math.random() * source.length)];
+            usedPasswordTrivia.push(selected.q);
+            if (usedPasswordTrivia.length > 10) usedPasswordTrivia = [selected.q];
+            return shuffleQuestionAnswers(selected);
+        }
+
+        function loadPasswordTrivia() {
+            if (!currentPasswordTrivia) currentPasswordTrivia = getNextPasswordTrivia();
+            showView("password-trivia-view");
+            document.getElementById("password-trivia-q").innerText = currentPasswordTrivia.q;
+            document.getElementById("password-trivia-context").innerText = `Profile ${currentPasswordIndex + 1} follow-up. Answer a password-defense question before the next audit profile loads.`;
+            document.getElementById("password-trivia-context").className = "text-sm text-slate-500";
+
+            const container = document.getElementById("password-trivia-options");
+            container.innerHTML = "";
+            currentPasswordTrivia.opts.forEach((opt, index) => {
+                const button = document.createElement("button");
+                button.className = "w-full text-left p-4 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:border-amber-500 transition-all";
+                button.innerText = opt;
+                button.onclick = () => handlePasswordTriviaChoice(index);
+                container.appendChild(button);
+            });
+        }
+
+        function handlePasswordTriviaChoice(index) {
+            const container = document.getElementById("password-trivia-options");
+            const context = document.getElementById("password-trivia-context");
+            const correct = index === currentPasswordTrivia.c;
+            if (correct) updateScore(500);
+            else updateScore(-150);
+            passwordScore = totalScore;
+            document.getElementById("password-score").innerText = passwordScore;
+            context.innerText = correct
+                ? "Correct. +500 points. Loading the next password profile..."
+                : `Incorrect. The best answer was "${currentPasswordTrivia.opts[currentPasswordTrivia.c]}". ${currentPasswordTrivia.why} -150 points. Loading the next password profile...`;
+            context.className = `text-sm ${correct ? "text-emerald-400" : "text-red-400"}`;
+            Array.from(container.children).forEach(child => {
+                child.setAttribute("disabled", "true");
+                child.classList.add("opacity-60");
+            });
+            setTimeout(() => {
+                currentPasswordTrivia = null;
+                nextPasswordRound();
+                showView("password-game-view");
+            }, 900);
         }
 
         function nextPasswordRound() {
@@ -1817,122 +1889,104 @@
             return "";
         }
 
-        // Shuffle answer options and update correct index
-        function shuffleQuestionAnswers(q) {
-            const opts = [...q.opts];
-            const correctText = opts[q.c];
-            // Fisher-Yates shuffle
-            for (let i = opts.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [opts[i], opts[j]] = [opts[j], opts[i]];
-            }
-            const newCorrectIndex = opts.indexOf(correctText);
-            return { ...q, opts, c: newCorrectIndex };
-        }
-
-        // Build the full arena question pool (60+ questions across all topics)
-        function buildArenaQuestionPool() {
-            const pool = [];
-
-            // ── CIPHER QUESTIONS ──────────────────────────────
-            const cipherQs = [
-                { topic: "Cipher", q: "Which sentence best describes a Caesar cipher?", opts: ["It mirrors the alphabet from both ends.", "It uses one fixed shift for every letter.", "It changes the shift with a keyword.", "It swaps whole words instead of letters."], c: 1, why: "A Caesar cipher keeps one constant shift across the whole message." },
-                { topic: "Cipher", q: "If the shift is 13, what happens to N in a Caesar cipher?", opts: ["N becomes Z.", "N becomes M.", "N becomes A.", "N becomes B."], c: 2, why: "Moving N forward by 13 wraps it to A." },
-                { topic: "Cipher", q: "Why is a Caesar cipher considered easy to break?", opts: ["Because it always deletes vowels.", "Because there are only 26 possible shifts.", "Because it needs internet access.", "Because it cannot handle uppercase letters."], c: 1, why: "There are only 26 possible shifts, so trying them all is practical." },
-                { topic: "Cipher", q: "If the shift is 2, what happens to Y in a Caesar cipher?", opts: ["Y becomes B.", "Y becomes C.", "Y becomes A.", "Y stays Y."], c: 2, why: "Y moves to Z and then wraps to A." },
-                { topic: "Cipher", q: "Which sentence correctly describes decrypting a Caesar cipher?", opts: ["You always mirror the alphabet.", "You must know the sender's password.", "You usually reverse the shift to move letters back.", "You reverse the order of the word."], c: 2, why: "To decrypt Caesar, you undo the original shift." },
-                { topic: "Cipher", q: "If the shift is 4, what does W become in a Caesar cipher?", opts: ["W becomes B.", "W becomes C.", "W becomes D.", "W becomes A."], c: 3, why: "W moves to X, Y, Z, then wraps to A." },
-                { topic: "Cipher", q: "Which sentence best explains why Caesar is a substitution cipher?", opts: ["It removes spaces to hide the text.", "It converts words into numbers only.", "It replaces each letter according to a fixed rule.", "It changes the message every second."], c: 2, why: "Each letter is substituted by another letter according to a fixed rule." },
-                { topic: "Cipher", q: "If one word is encrypted with a Caesar cipher, what stays consistent throughout the word?", opts: ["The font changes every letter.", "The shift amount stays the same throughout.", "The key changes every two letters.", "The alphabet is mirrored instead of shifted."], c: 1, why: "Caesar uses one repeated shift for the whole message." },
-                { topic: "Cipher", q: "If B becomes J in a Caesar cipher, what shift was used?", opts: ["The shift was 7.", "The shift was 9.", "The shift was 6.", "The shift was 8."], c: 3, why: "B to J moves eight positions." },
-                { topic: "Cipher", q: "What happens if you apply ROT13 twice to the same message?", opts: ["The message gets deleted.", "The message becomes random symbols.", "The message returns to the original text.", "The message changes to Atbash output."], c: 2, why: "Two ROT13 shifts equal 26, which returns the text to its starting point." },
-                { topic: "Cipher", q: "Which sentence best describes ROT13?", opts: ["It mirrors the alphabet from both ends.", "It uses a changing keyword.", "It is a fixed Caesar shift of 13.", "It sorts letters alphabetically."], c: 2, why: "ROT13 is just a Caesar cipher with the shift locked to 13." },
-                { topic: "Cipher", q: "If A is encoded with ROT13, what does it become?", opts: ["It becomes M.", "It becomes N.", "It becomes Z.", "It becomes B."], c: 1, why: "A shifted forward 13 places becomes N." },
-                { topic: "Cipher", q: "Why is ROT13 not considered secure encryption?", opts: ["Because it uses lowercase letters.", "Because it has only one fixed transformation.", "Because it changes spaces too often.", "Because it can only encode numbers."], c: 1, why: "A single known fixed shift makes it trivial to reverse." },
-                { topic: "Cipher", q: "Which sentence best explains why ROT13 is symmetrical?", opts: ["The keyword changes every turn.", "The message length is cut in half.", "The output always uses symbols.", "The same process both encrypts and decrypts."], c: 3, why: "A symmetrical transform means the same action reverses itself." },
-                { topic: "Cipher", q: "Why is 13 a special shift value in ROT13?", opts: ["Because 13 is the only prime number.", "Because 13 skips vowels automatically.", "Because 13 is exactly half of 26.", "Because 13 cannot wrap around."], c: 2, why: "Halfway through the alphabet makes the transform self-reversing." },
-                { topic: "Cipher", q: "In Atbash, what does Z become?", opts: ["It stays Z.", "It becomes M.", "It becomes B.", "It becomes A."], c: 3, why: "Atbash mirrors the alphabet from both ends, so Z pairs with A." },
-                { topic: "Cipher", q: "Which sentence best describes Atbash?", opts: ["It uses one fixed forward shift.", "It mirrors letters across the alphabet.", "It repeats a keyword.", "It removes repeated characters."], c: 1, why: "Atbash is based on mirrored pairs, not shifting." },
-                { topic: "Cipher", q: "Why does applying Atbash twice restore the original text?", opts: ["Because it uses the same mirror pairing both times.", "Because it shifts by 13 twice.", "Because it deletes punctuation.", "Because it uses two passwords."], c: 0, why: "Mirroring a mirrored letter sends it back to the start." },
-                { topic: "Cipher", q: "If D is encoded with Atbash, what is the result?", opts: ["It becomes U.", "It becomes T.", "It becomes W.", "It becomes V."], c: 2, why: "D is the fourth letter, so it pairs with W, the fourth from the end." },
-                { topic: "Cipher", q: "Why is Atbash different from a Caesar cipher?", opts: ["Atbash changes the shift each letter.", "Atbash mirrors instead of shifting by one amount.", "Atbash only works with lowercase text.", "Atbash needs internet access."], c: 1, why: "Atbash uses reflection instead of a numeric shift." },
-                { topic: "Cipher", q: "What controls the shifts in a Vigenere cipher?", opts: ["A mirror rule controls the shifts.", "Only the date controls the shifts.", "The spaces decide the shifts.", "A repeated keyword controls the shifts."], c: 3, why: "A Vigenere cipher repeats a keyword and uses its letters as shift values." },
-                { topic: "Cipher", q: "Why is Vigenere stronger than a simple Caesar cipher?", opts: ["Because it removes spaces automatically.", "Because the shift can change from letter to letter.", "Because it never repeats letters.", "Because it only uses symbols."], c: 1, why: "A changing shift pattern hides simple frequency clues better than one fixed shift." },
-                { topic: "Cipher", q: "If the keyword is AAA in Vigenere, what happens?", opts: ["It shifts every letter by 1.", "It behaves like Atbash.", "It deletes every third letter.", "It applies no shift at any position."], c: 3, why: "A corresponds to a shift of zero in Vigenere." },
-                { topic: "Cipher", q: "Why can two identical plaintext letters produce different ciphertext letters in Vigenere?", opts: ["Because Vigenere removes one of the letters.", "Because identical letters are illegal.", "Because the keyword letter may be different at each position.", "Because the alphabet is mirrored each time."], c: 2, why: "The key changes by position, so matching plaintext letters can encrypt differently." },
-                { topic: "Cipher", q: "Which word best fits the term 'polyalphabetic' when describing Vigenere?", opts: ["The cipher removes half the alphabet.", "The cipher can use different shifts in one message.", "The cipher works only with many spaces.", "The cipher always mirrors the alphabet."], c: 1, why: "Polyalphabetic means more than one alphabet or shift pattern is in use." },
-                { topic: "Cipher", q: "If a Vigenere riddle leads you to the word KEY, what is that word giving you?", opts: ["It tells you to mirror the alphabet instead.", "It proves the message must be ROT13.", "It means the message cannot be decrypted.", "It gives you the repeating shift pattern for the message."], c: 3, why: "The keyword controls the position-by-position shifts in Vigenere." },
-                { topic: "Cipher", q: "If you apply ROT13 twice to a word, which statement is correct?", opts: ["The word turns into Atbash output.", "The word loses every second letter.", "The word needs a keyword before it can return.", "The word returns to the original message."], c: 3, why: "A second ROT13 pass completes a full 26-letter rotation." },
-                { topic: "Cipher", q: "Which sentence correctly describes how shorter Vigenere keys work on longer messages?", opts: ["The key only applies to the first few letters.", "The key is ignored after the first space.", "The key changes randomly after each word.", "The key repeats until the full message is covered."], c: 3, why: "Shorter keys repeat across the full message." },
-                { topic: "Cipher", q: "If the shift is 25 in a Caesar cipher, what is another way to describe it?", opts: ["It is the same as ROT13.", "It is the same as shifting forward by 2.", "It is the same as shifting backward by 1.", "It is the same as Atbash."], c: 2, why: "A forward shift of 25 is equivalent to moving backward one." },
-                { topic: "Cipher", q: "In Atbash, if Y is decoded, what letter appears?", opts: ["A should appear.", "C should appear.", "D should appear.", "B should appear."], c: 3, why: "Y pairs with B in Atbash." },
-                { topic: "Cipher", q: "If a 3-letter Vigenere key is used on a long message, what happens after the third letter?", opts: ["The key repeats from the beginning.", "The key only applies to the first three letters.", "The key is ignored after the first space.", "The key changes randomly."], c: 0, why: "Shorter keys repeat across the full message." },
-            ];
-
-            // ── PHISHING QUESTIONS ────────────────────────────
-            const phishingQs = [
-                { topic: "Phishing", q: "A message claims your account will close in 10 minutes unless you click now. What is the safest response?", opts: ["Click immediately because urgency proves it is real.", "Reply with your password to confirm it is you.", "Trust it because it mentions security.", "Slow down and verify through the real service instead of rushing."], c: 3, why: "Urgency is a common pressure tactic in phishing." },
-                { topic: "Phishing", q: "A login page link starts with a familiar brand name but ends on an unfamiliar root domain. Which statement is correct?", opts: ["The familiar word at the front makes the site safe.", "HTTPS alone proves the page is real.", "A branded logo is enough to trust it.", "The real root domain matters more than the familiar word at the front."], c: 3, why: "Attackers often hide trusted names inside fake longer URLs." },
-                { topic: "Phishing", q: "A coworker requests a fast payment change by email only. What is the best move?", opts: ["Approve it quickly to avoid delays.", "Trust it if the signature looks polished.", "Send extra account details to be safe.", "Verify the request with a separate trusted contact method first."], c: 3, why: "A second channel is the safest response for high-risk requests." },
-                { topic: "Phishing", q: "Which sentence best describes spear phishing?", opts: ["It is a harmless marketing newsletter.", "It is a password manager feature.", "It is the same as a firewall alert.", "It is a phishing attempt tailored to a specific person, team, or role."], c: 3, why: "Spear phishing is targeted and often more believable." },
-                { topic: "Phishing", q: "What is one key reason shortened URLs are risky in emails?", opts: ["They never work.", "They always lead to videos.", "They are illegal.", "They hide the true destination of the link."], c: 3, why: "Shortened URLs can mask malicious destinations." },
-                { topic: "Phishing", q: "Which detail should raise suspicion about an email sender?", opts: ["The email uses a greeting.", "The email includes a subject line.", "The sender domain almost matches a real company but is slightly different.", "The email is written in a professional tone."], c: 2, why: "Look-alike domains are a classic phishing technique." },
-                { topic: "Phishing", q: "What does hovering over a link before clicking help you check?", opts: ["The font used in the email.", "The sender's profile picture.", "The true destination URL of the link.", "The size of the email attachment."], c: 2, why: "Hovering reveals the actual URL behind a link." },
-                { topic: "Phishing", q: "Why should you report a suspicious email to your team or provider?", opts: ["To make all future email disappear.", "To automatically change your password.", "Because reporting is only useful for spam ads.", "To help protect others and your organization from the same attack."], c: 3, why: "Reporting suspicious messages can help stop the attack chain." },
-                { topic: "Phishing", q: "Which of these is a common warning sign of a phishing email?", opts: ["The email is addressed using your full name.", "The email uses urgent language and requests sensitive information.", "The email comes from a newsletter you subscribed to.", "The email includes a company logo you recognize."], c: 1, why: "Urgency combined with sensitive data requests is a red flag." },
-                { topic: "Phishing", q: "If an email asks you to open an unexpected attachment, what should you do first?", opts: ["Open it immediately if the sender name looks familiar.", "Open it because attachments from emails are always safe.", "Click it and check if your antivirus flags it afterward.", "Verify with the sender through a separate channel before opening."], c: 3, why: "Unexpected attachments from unverified senders are a phishing risk." },
-                { topic: "Phishing", q: "Which action is the safest when you are unsure whether an email is legitimate?", opts: ["Reply to the email asking if it is real.", "Click the link and see if the page looks correct.", "Go directly to the official website instead of using the email link.", "Forward the email to a colleague to let them decide."], c: 2, why: "Using official channels instead of email links avoids phishing traps." },
-                { topic: "Phishing", q: "What makes an email from a known contact potentially dangerous?", opts: ["The contact's email can never be spoofed.", "Contacts always send safe messages.", "A known sender's account may have been compromised and used to send phishing messages.", "A familiar sender name always means the email is legitimate."], c: 2, why: "Compromised accounts are used to send phishing to trusted contacts." },
-                { topic: "Phishing", q: "What is pretexting in the context of phishing?", opts: ["A technical encryption method used to hide email content.", "A spam filter setting.", "Creating a false scenario to manipulate someone into revealing information.", "A type of antivirus scan."], c: 2, why: "Pretexting involves fabricating a believable story to trick the target." },
-                { topic: "Phishing", q: "Which sentence best explains why phishing uses urgency?", opts: ["Urgency makes the email look more professional.", "Urgency encourages slow, careful reading.", "Urgency has no effect on decision-making.", "Urgency pressures the target to act before they can think critically."], c: 3, why: "Pressure tactics bypass careful reasoning." },
-                { topic: "Phishing", q: "What is vishing?", opts: ["A type of email spam filter.", "A password hashing algorithm.", "A phishing attack carried out over a voice call.", "A virus that spreads through USB drives."], c: 2, why: "Vishing (voice phishing) uses phone calls to trick victims." },
-                { topic: "Phishing", q: "If a website uses HTTPS, does that mean it is definitely safe?", opts: ["Yes, HTTPS guarantees the site is legitimate.", "No, HTTPS only encrypts the connection, not the intent of the site.", "Yes, because malicious sites cannot get SSL certificates.", "No, because HTTPS sites never have login forms."], c: 1, why: "HTTPS encrypts traffic but does not verify that the site is trustworthy." },
-            ];
-
-            // ── PASSWORD QUESTIONS ────────────────────────────
-            const passwordQs = [
-                { topic: "Password", q: "Which sentence best explains why a longer mixed-character password is usually stronger?", opts: ["It guarantees a phishing email will fail.", "It removes the need for multi-factor authentication.", "It stops every malicious link from loading.", "It creates many more possible combinations for an attacker to test."], c: 3, why: "Length and variety expand the search space dramatically." },
-                { topic: "Password", q: "Between two equally memorable passwords, which is generally safer?", opts: ["The shorter one, because it is easier to type.", "The one based on a favorite word.", "The one reused on several sites.", "The longer one with more character variety."], c: 3, why: "More combinations make brute-force guessing harder." },
-                { topic: "Password", q: "Why do symbols and numbers strengthen a password?", opts: ["They automatically verify every email link.", "They make the password shorter to crack.", "They only matter if the site uses ROT13.", "They expand the character set so each position has more possibilities."], c: 3, why: "A larger character set increases the total number of combinations." },
-                { topic: "Password", q: "What is one key reason to use multi-factor authentication alongside a strong password?", opts: ["It makes passwords unnecessary forever.", "It guarantees every message you get is legitimate.", "It changes fake domains into real ones.", "It adds another barrier if the password is ever stolen or guessed."], c: 3, why: "MFA provides an extra layer when a password alone is compromised." },
-                { topic: "Password", q: "Why is reusing the same password on multiple sites risky?", opts: ["Because reused passwords are always easy to guess.", "Because some sites block reused passwords.", "Because a breach on one site gives attackers access to your other accounts.", "Because passwords expire automatically on most sites."], c: 2, why: "Credential stuffing uses leaked passwords to attack other services." },
-                { topic: "Password", q: "What does a password manager primarily help you do?", opts: ["Automatically reset your passwords every week.", "Log into sites without needing a password.", "Encrypt your emails before sending.", "Generate and store unique strong passwords for every site."], c: 3, why: "Password managers remove the need to remember many unique passwords." },
-                { topic: "Password", q: "Which password profile is most resistant to brute-force guessing?", opts: ["A short dictionary word.", "An 8-letter lowercase password.", "Your name combined with one number.", "A long password mixing letters, numbers, and symbols."], c: 3, why: "Length plus mixed character sets expands the search space much more than simple patterns." },
-                { topic: "Password", q: "Why are dictionary words considered weak password choices?", opts: ["Because they are too long.", "Because attackers specifically test common words and phrases first.", "Because they contain too many symbols.", "Because dictionary words cannot be typed quickly."], c: 1, why: "Dictionary attacks try common words before random combinations." },
-                { topic: "Password", q: "What makes a passphrase (a string of random words) a strong password?", opts: ["It is easy to crack because it uses real words.", "Short passphrases are always stronger than long ones.", "Passphrases can only be used on certain websites.", "Its length creates a very large search space while being memorable."], c: 3, why: "A long passphrase is both memorable and computationally hard to crack." },
-                { topic: "Password", q: "What is the most important property of a good password from a security standpoint?", opts: ["It should be meaningful to you personally.", "It should be short and easy to type.", "It should be the same on all your accounts for consistency.", "It should be unique, long, and hard to guess or brute-force."], c: 3, why: "Unique, complex passwords are the foundation of strong credential security." },
-                { topic: "Password", q: "Why should you never share your password with colleagues, even trusted ones?", opts: ["Because colleagues always steal passwords.", "Because shared passwords make audit trails unreliable and increase exposure.", "Because most websites block shared access.", "Because passwords change too frequently to share."], c: 1, why: "Shared credentials break accountability and widen attack surface." },
-                { topic: "Password", q: "What is credential stuffing?", opts: ["A technique where leaked username/password pairs are tested on other services.", "A method of encrypting credentials in a database.", "A way to generate strong passwords automatically.", "A firewall rule that blocks repeat login attempts."], c: 0, why: "Credential stuffing exploits password reuse across multiple sites." },
-                { topic: "Password", q: "What does salting a password hash do?", opts: ["It makes the password visible to administrators.", "It shortens the password before storing.", "It adds random data before hashing so identical passwords produce different hashes.", "It deletes the original password immediately."], c: 2, why: "Salting prevents attackers from using precomputed rainbow table attacks." },
-                { topic: "Password", q: "Why is a password complexity requirement (uppercase, numbers, symbols) not sufficient on its own?", opts: ["Because complexity requirements make passwords impossible to remember.", "Because complexity does not matter if the password is very short.", "Because uppercase letters are the only secure characters.", "Because numbers and symbols always make passwords weaker."], c: 1, why: "A short complex password can still be brute-forced; length is the most important factor." },
-                { topic: "Password", q: "What is the purpose of multi-factor authentication?", opts: ["To replace passwords entirely.", "To slow down login pages.", "To require a second proof of identity beyond just the password.", "To send alert emails when someone logs in."], c: 2, why: "MFA requires attackers to compromise two separate factors to gain access." },
-                { topic: "Password", q: "Which of these is an example of something you HAVE in multi-factor authentication?", opts: ["Your fingerprint.", "Your password.", "Your mother's maiden name.", "A one-time code sent to your phone."], c: 3, why: "An MFA code sent to your phone is something you physically possess." },
-            ];
-
-            // Combine and add topic field
-            [...cipherQs, ...phishingQs, ...passwordQs].forEach(q => {
-                pool.push(q);
-            });
-
-            return pool;
-        }
-
-        // Lazy-initialized question pool (built once per session)
-        let _arenaQuestionPool = null;
-
-        function getArenaQuestionPool() {
-            if (!_arenaQuestionPool) _arenaQuestionPool = buildArenaQuestionPool();
-            return _arenaQuestionPool;
-        }
-
         function getArenaThemeQuestions(themeKey) {
-            // Legacy shim — now just returns a random question from the full pool
-            const pool = getArenaQuestionPool();
-            const filtered = themeKey === "cipher" ? pool.filter(q => q.topic === "Cipher")
-                : themeKey === "phishing" ? pool.filter(q => q.topic === "Phishing")
-                : themeKey === "password" ? pool.filter(q => q.topic === "Password")
-                : pool;
-            return filtered;
+            if (themeKey === "cipher") {
+                const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                const from = letters[Math.floor(Math.random() * 20)];
+                const shift = Math.floor(Math.random() * 10) + 1;
+                const to = letters[(letters.indexOf(from) + shift) % 26];
+                const atbashPairs = [["A", "Z"], ["B", "Y"], ["C", "X"], ["D", "W"], ["E", "V"], ["F", "U"], ["G", "T"], ["H", "S"]];
+                const pair = atbashPairs[Math.floor(Math.random() * atbashPairs.length)];
+                const cipherPrompts = [
+                    buildShiftSentenceQuestion(from, to),
+                    {
+                        topic: "Cipher",
+                        q: "If you apply ROT13 twice to the same word, which sentence is correct?",
+                        opts: ["The word returns to the original message.", "The word turns into Atbash output.", "The word loses every second letter.", "The word needs a keyword before it can return."],
+                        c: 0,
+                        why: "A second ROT13 pass completes a full 26-letter rotation."
+                    },
+                    {
+                        topic: "Cipher",
+                        q: `In Atbash, which sentence correctly matches the pair ${pair[0]} and ${pair[1]}?`,
+                        opts: [`${pair[0]} mirrors to ${pair[1]}.`, `${pair[0]} shifts forward by 13.`, `${pair[0]} stays the same in every cipher.`, `${pair[0]} can only be decoded with a keyword.`],
+                        c: 0,
+                        why: "Atbash uses mirrored alphabet pairs."
+                    },
+                    {
+                        topic: "Cipher",
+                        q: "If a Vigenere riddle leads you to the word KEY, what is that word giving you?",
+                        opts: ["It gives you the repeating shift pattern for the message.", "It tells you to mirror the alphabet instead.", "It proves the message must be ROT13.", "It means the message cannot be decrypted."],
+                        c: 0,
+                        why: "The keyword controls the position-by-position shifts in Vigenere."
+                    }
+                ];
+                return [cipherPrompts[Math.floor(Math.random() * cipherPrompts.length)]];
+            }
+            if (themeKey === "phishing") {
+                const prompts = [
+                    {
+                        topic: "Phishing",
+                        q: "A message claims your account will close in 10 minutes unless you click now. Which sentence is the safest response?",
+                        opts: ["I should slow down and verify through the real service instead of rushing.", "I should click immediately because urgency proves it is real.", "I should reply with my password to confirm it is me.", "I should trust it because it mentions security."],
+                        c: 0,
+                        why: "Urgency is a common pressure tactic in phishing."
+                    },
+                    {
+                        topic: "Phishing",
+                        q: "A login page link starts with a familiar brand name but ends on an unfamiliar root domain. Which sentence is correct?",
+                        opts: ["The real root domain matters more than the familiar word at the front.", "The familiar word at the front makes the site safe.", "HTTPS alone proves the page is real.", "A branded logo is enough to trust it."],
+                        c: 0,
+                        why: "Attackers often hide trusted names inside fake longer URLs."
+                    },
+                    {
+                        topic: "Phishing",
+                        q: "A coworker asks for a fast payment change by email only. Which sentence is the best move?",
+                        opts: ["I should verify the request with a separate trusted contact method first.", "I should approve it quickly to avoid delays.", "I should trust it if the signature looks polished.", "I should send extra account details to be safe."],
+                        c: 0,
+                        why: "A second channel is the safest response for high-risk requests."
+                    },
+                    {
+                        topic: "Phishing",
+                        q: "Which sentence best describes spear phishing?",
+                        opts: ["It is a phishing attempt tailored to a specific person, team, or role.", "It is a harmless marketing newsletter.", "It is a password manager feature.", "It is the same as a firewall alert."],
+                        c: 0,
+                        why: "Spear phishing is targeted and often more believable."
+                    }
+                ];
+                return [prompts[Math.floor(Math.random() * prompts.length)]];
+            }
+            const prompts = [
+                {
+                    topic: "Password",
+                    q: "Which sentence best explains why a longer mixed-character password is usually stronger?",
+                    opts: ["It creates many more possible combinations for an attacker to test.", "It guarantees a phishing email will fail.", "It removes the need for multi-factor authentication.", "It stops every malicious link from loading."],
+                    c: 0,
+                    why: "Length and variety expand the search space dramatically."
+                },
+                {
+                    topic: "Password",
+                    q: "If two passwords are memorable, which sentence is usually safer?",
+                    opts: ["The longer one with more character variety is usually safer against guessing.", "The shorter one is always safer because it is easier to type.", "The one based on a favorite word is safest.", "The one reused on several sites is safest."],
+                    c: 0,
+                    why: "More combinations make brute-force guessing harder."
+                },
+                {
+                    topic: "Password",
+                    q: "Which sentence best explains why symbols and numbers can help?",
+                    opts: ["They expand the character set so each position has more possibilities.", "They automatically verify every email link.", "They make the password shorter to crack.", "They only matter if the site uses ROT13."],
+                    c: 0,
+                    why: "A larger character set increases the total number of combinations."
+                },
+                {
+                    topic: "Password",
+                    q: "What is one good reason to use multi-factor authentication with strong passwords?",
+                    opts: ["It adds another barrier if the password is ever stolen or guessed.", "It makes passwords unnecessary forever.", "It guarantees every message you get is legitimate.", "It changes fake domains into real ones."],
+                    c: 0,
+                    why: "MFA provides an extra layer when a password alone is compromised."
+                }
+            ];
+            return [prompts[Math.floor(Math.random() * prompts.length)]];
         }
 
         function showArenaThemes() {
@@ -1965,7 +2019,7 @@
             stopArenaGame();
             arenaThemeKey = themeKey;
             arenaQuestionPassed = false;
-            arenaState = { usedQuestions: [], correctlyAnswered: [], topicIndex: 0 };
+            arenaState = { usedQuestions: [] };
             arenaGateQuestion = getNextArenaQuestion();
 
             document.getElementById("arena-question-title").innerText = "Threat Arena Access Check";
@@ -1988,15 +2042,18 @@
                 button.innerText = opt;
                 button.onclick = () => {
                     if (index === question.c) {
-                        markArenaQuestionCorrect(question.q);
                         arenaQuestionPassed = true;
+                        updateScore(ARENA_QUESTION_REWARD);
+                        arenaScore = totalScore;
                         Array.from(options.children).forEach(child => child.classList.add("pointer-events-none", "opacity-60"));
-                        document.getElementById("arena-question-feedback").innerText = `${question.topic} question cleared. Starting utility unlocked.`;
+                        document.getElementById("arena-question-feedback").innerText = `${question.topic} question cleared. Starting utility unlocked. +500 points.`;
                         document.getElementById("arena-question-feedback").className = "text-sm text-emerald-400";
                         const abilityBox = document.getElementById("arena-ability-options");
                         abilityBox.classList.remove("opacity-50", "pointer-events-none");
                     } else {
-                        document.getElementById("arena-question-feedback").innerText = `Incorrect. The right answer is "${question.opts[question.c]}". ${question.why} Loading a new question...`;
+                        updateScore(ARENA_QUESTION_PENALTY);
+                        arenaScore = totalScore;
+                        document.getElementById("arena-question-feedback").innerText = `Incorrect. The right answer is "${question.opts[question.c]}". ${question.why} -150 points. Loading a new question...`;
                         document.getElementById("arena-question-feedback").className = "text-sm text-red-400";
                         Array.from(options.children).forEach(child => child.classList.add("pointer-events-none", "opacity-60"));
                         setTimeout(() => {
@@ -2042,8 +2099,7 @@
         }
 
         function getArenaLevelTarget(level) {
-            // Scales from 8 XP at level 1 to ~20 XP at level 50, manageable with 1 XP per kill
-            return Math.floor(8 + (level - 1) * 0.25);
+            return 5 + ((level - 1) * 3);
         }
 
         function createArenaEntity(type, x, y, extra = "") {
@@ -2084,6 +2140,88 @@
             arenaKeys = { w: false, a: false, s: false, d: false };
         }
 
+        function initArenaJoystick() {
+            if (arenaJoystickCleanup) return;
+            const base = document.getElementById("arena-joystick-base");
+            const knob = document.getElementById("arena-joystick-knob");
+            const controls = document.getElementById("arena-mobile-controls");
+            if (!base || !knob || !controls) return;
+
+            const isTouch = navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches;
+            controls.style.display = isTouch ? "flex" : "none";
+            if (!isTouch) return;
+
+            const knobTravel = 30;
+
+            const resetJoystick = () => {
+                arenaJoystickActive = false;
+                arenaJoystickTouchId = null;
+                arenaJoystickVector = { x: 0, y: 0 };
+                knob.style.transform = "translate(-50%, -50%)";
+            };
+
+            const onTouchStart = (event) => {
+                if (arenaJoystickTouchId !== null) return;
+                const touch = event.changedTouches[0];
+                arenaJoystickTouchId = touch.identifier;
+                arenaJoystickActive = true;
+                event.preventDefault();
+            };
+
+            const onTouchMove = (event) => {
+                if (!arenaJoystickActive) return;
+                let touch = null;
+                for (let i = 0; i < event.changedTouches.length; i++) {
+                    if (event.changedTouches[i].identifier === arenaJoystickTouchId) {
+                        touch = event.changedTouches[i];
+                        break;
+                    }
+                }
+                if (!touch) return;
+                const rect = base.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dx = touch.clientX - cx;
+                const dy = touch.clientY - cy;
+                const dist = Math.hypot(dx, dy) || 1;
+                const normalizedX = dx / dist;
+                const normalizedY = dy / dist;
+                const travel = Math.min(knobTravel, dist);
+                arenaJoystickVector = { x: normalizedX, y: normalizedY };
+                knob.style.transform = `translate(calc(-50% + ${normalizedX * travel}px), calc(-50% + ${normalizedY * travel}px))`;
+                event.preventDefault();
+            };
+
+            const onTouchEnd = (event) => {
+                for (let i = 0; i < event.changedTouches.length; i++) {
+                    if (event.changedTouches[i].identifier === arenaJoystickTouchId) {
+                        resetJoystick();
+                        event.preventDefault();
+                        return;
+                    }
+                }
+            };
+
+            base.addEventListener("touchstart", onTouchStart, { passive: false });
+            window.addEventListener("touchmove", onTouchMove, { passive: false });
+            window.addEventListener("touchend", onTouchEnd, { passive: false });
+            window.addEventListener("touchcancel", onTouchEnd, { passive: false });
+
+            arenaJoystickCleanup = () => {
+                base.removeEventListener("touchstart", onTouchStart);
+                window.removeEventListener("touchmove", onTouchMove);
+                window.removeEventListener("touchend", onTouchEnd);
+                window.removeEventListener("touchcancel", onTouchEnd);
+                resetJoystick();
+                controls.style.display = "none";
+                arenaJoystickCleanup = null;
+            };
+        }
+
+        function destroyArenaJoystick() {
+            if (arenaJoystickCleanup) arenaJoystickCleanup();
+        }
+
         function addArenaLog(message) {
             const log = document.getElementById("arena-log");
             if (!log) return;
@@ -2104,15 +2242,11 @@
             document.getElementById("arena-levelup-overlay").classList.add("hidden");
             document.getElementById("arena-log").innerHTML = "";
 
-            // Force a layout so clientWidth/Height are accurate post-showView
-            const W = stage.offsetWidth || stage.clientWidth || 300;
-            const H = stage.offsetHeight || stage.clientHeight || 300;
-
             arenaLevelupCount = 0;
             arenaState = {
-                width: W,
-                height: H,
-                player: { x: W / 2, y: H / 2, radius: 14, speed: 250, health: 100, hitCooldown: 0, damageReduction: 0 },
+                width: stage.clientWidth,
+                height: stage.clientHeight,
+                player: { x: stage.clientWidth / 2, y: stage.clientHeight / 2, radius: 14, speed: 250, health: 100, hitCooldown: 0, damageReduction: 0 },
                 enemies: [],
                 projectiles: [],
                 xpOrbs: [],
@@ -2125,16 +2259,10 @@
                 nextXp: getArenaLevelTarget(1),
                 elapsed: 0,
                 spawnTimer: 0,
-                minibossTimer: 0,
-                bossTimer: 0,
-                minibossCount: 0,
-                bossCount: 0,
                 won: false,
                 paused: false,
                 lastTs: null,
-                usedQuestions: [],
-                correctlyAnswered: [],
-                topicIndex: 0
+                usedQuestions: []
             };
 
             arenaState.player.el = createArenaEntity("arena-player", arenaState.player.x, arenaState.player.y);
@@ -2170,12 +2298,8 @@
             if (!arenaState.paused) {
                 arenaState.elapsed += dt;
                 arenaState.spawnTimer += dt;
-                arenaState.minibossTimer += dt;
-                arenaState.bossTimer += dt;
                 moveArenaPlayer(dt);
                 spawnArenaEnemies();
-                checkArenaMinibossSpawn();
-                checkArenaBossSpawn();
                 updateArenaAbilities(dt);
                 updateArenaEnemies(dt);
                 updateArenaProjectiles(dt);
@@ -2189,102 +2313,17 @@
             arenaLoopId = requestAnimationFrame(stepArenaGame);
         }
 
-        // ── Virtual Joystick ─────────────────────────────────
-        let joystickActive = false;
-        let joystickVec = { x: 0, y: 0 };
-        let joystickTouchId = null;
-        let _joystickHandlers = null;
-
-        function initArenaJoystick() {
-            const zone = document.getElementById("arena-joystick-zone");
-            const base = document.getElementById("arena-joystick-base");
-            const knob = document.getElementById("arena-joystick-knob");
-            if (!zone || !base || !knob) return;
-
-            // Show joystick only on touch-capable devices
-            const isTouch = navigator.maxTouchPoints > 0 || window.matchMedia("(pointer: coarse)").matches;
-            if (isTouch) zone.style.display = "block";
-
-            const baseRadius = 45; // half of 90px base
-            const knobRadius = 18; // half of 36px knob
-
-            function onTouchStart(e) {
-                if (joystickTouchId !== null) return;
-                const t = e.changedTouches[0];
-                joystickTouchId = t.identifier;
-                joystickActive = true;
-                e.preventDefault();
-            }
-
-            function onTouchMove(e) {
-                if (!joystickActive) return;
-                let t = null;
-                for (let i = 0; i < e.changedTouches.length; i++) {
-                    if (e.changedTouches[i].identifier === joystickTouchId) { t = e.changedTouches[i]; break; }
-                }
-                if (!t) return;
-                const rect = base.getBoundingClientRect();
-                const cx = rect.left + rect.width / 2;
-                const cy = rect.top + rect.height / 2;
-                let dx = t.clientX - cx;
-                let dy = t.clientY - cy;
-                const dist = Math.hypot(dx, dy) || 1;
-                const clamped = Math.min(dist, baseRadius - knobRadius);
-                joystickVec.x = (dx / dist);
-                joystickVec.y = (dy / dist);
-                knob.style.transform = `translate(calc(-50% + ${joystickVec.x * clamped}px), calc(-50% + ${joystickVec.y * clamped}px))`;
-                e.preventDefault();
-            }
-
-            function onTouchEnd(e) {
-                for (let i = 0; i < e.changedTouches.length; i++) {
-                    if (e.changedTouches[i].identifier === joystickTouchId) {
-                        joystickTouchId = null;
-                        joystickActive = false;
-                        joystickVec = { x: 0, y: 0 };
-                        knob.style.transform = "translate(-50%, -50%)";
-                        break;
-                    }
-                }
-                e.preventDefault();
-            }
-
-            zone.addEventListener("touchstart", onTouchStart, { passive: false });
-            window.addEventListener("touchmove", onTouchMove, { passive: false });
-            window.addEventListener("touchend", onTouchEnd, { passive: false });
-            window.addEventListener("touchcancel", onTouchEnd, { passive: false });
-
-            _joystickHandlers = { onTouchStart, onTouchMove, onTouchEnd, zone };
-        }
-
-        function destroyArenaJoystick() {
-            if (!_joystickHandlers) return;
-            const { onTouchStart, onTouchMove, onTouchEnd, zone } = _joystickHandlers;
-            if (zone) zone.removeEventListener("touchstart", onTouchStart);
-            window.removeEventListener("touchmove", onTouchMove);
-            window.removeEventListener("touchend", onTouchEnd);
-            window.removeEventListener("touchcancel", onTouchEnd);
-            joystickActive = false;
-            joystickVec = { x: 0, y: 0 };
-            joystickTouchId = null;
-            _joystickHandlers = null;
-            const zone2 = document.getElementById("arena-joystick-zone");
-            if (zone2) zone2.style.display = "none";
-        }
-
         function moveArenaPlayer(dt) {
             const p = arenaState.player;
             let dx = 0;
             let dy = 0;
-            // Keyboard input
             if (arenaKeys.w) dy -= 1;
             if (arenaKeys.s) dy += 1;
             if (arenaKeys.a) dx -= 1;
             if (arenaKeys.d) dx += 1;
-            // Joystick input (additive, normalized after)
-            if (joystickActive) {
-                dx += joystickVec.x;
-                dy += joystickVec.y;
+            if (arenaJoystickActive) {
+                dx += arenaJoystickVector.x;
+                dy += arenaJoystickVector.y;
             }
             if (dx || dy) {
                 const mag = Math.hypot(dx, dy) || 1;
@@ -2324,10 +2363,10 @@
 
                 const profile = {
                     adware: { radius: 11, speed: 34 + elapsed * 0.4, health: elapsed > 55 ? 3 : elapsed > 20 ? 2 : 1, xp: 1, css: "arena-enemy" },
-                    worm: { radius: 8, speed: 56 + elapsed * 0.45, health: 1, xp: 1, css: "arena-enemy-worm" },
-                    spyware: { radius: 9, speed: 38 + elapsed * 0.35, health: 2, xp: 1, css: "arena-enemy-spyware" },
-                    ransomware: { radius: 15, speed: 24 + elapsed * 0.28, health: elapsed > 60 ? 8 : 6, xp: 1, css: "arena-enemy-ransomware" },
-                    trojan: { radius: 13, speed: 31 + elapsed * 0.32, health: elapsed > 70 ? 8 : 6, xp: 1, css: "arena-enemy-trojan" }
+                    worm: { radius: 8, speed: 56 + elapsed * 0.45, health: 1, xp: 2, css: "arena-enemy-worm" },
+                    spyware: { radius: 9, speed: 38 + elapsed * 0.35, health: 2, xp: 2, css: "arena-enemy-spyware" },
+                    ransomware: { radius: 15, speed: 24 + elapsed * 0.28, health: elapsed > 60 ? 8 : 6, xp: 4, css: "arena-enemy-ransomware" },
+                    trojan: { radius: 13, speed: 31 + elapsed * 0.32, health: elapsed > 70 ? 8 : 6, xp: 5, css: "arena-enemy-trojan" }
                 }[type];
 
                 const enemy = {
@@ -2472,16 +2511,10 @@
             if (!arenaState.enemies.length) return;
             const shots = level >= 3 ? 2 : 1;
             const damage = level >= 4 ? 2 : 1;
-            const targets = [...arenaState.enemies]
-                .filter(e => !isEnemyEffectivelyDead(e))
-                .sort((a, b) =>
-                    Math.hypot(a.x - arenaState.player.x, a.y - arenaState.player.y) - Math.hypot(b.x - arenaState.player.x, b.y - arenaState.player.y)
-                ).slice(0, shots);
-            if (!targets.length) return;
+            const targets = [...arenaState.enemies].sort((a, b) =>
+                Math.hypot(a.x - arenaState.player.x, a.y - arenaState.player.y) - Math.hypot(b.x - arenaState.player.x, b.y - arenaState.player.y)
+            ).slice(0, shots);
             targets.forEach(target => {
-                const dx = target.x - arenaState.player.x;
-                const dy = target.y - arenaState.player.y;
-                const dist = Math.hypot(dx, dy) || 1;
                 const projectile = {
                     x: arenaState.player.x,
                     y: arenaState.player.y,
@@ -2489,8 +2522,6 @@
                     speed: level >= 5 ? 420 : 330,
                     target,
                     damage,
-                    vx: dx / dist,
-                    vy: dy / dist,
                     el: createArenaEntity("arena-projectile", arenaState.player.x, arenaState.player.y)
                 };
                 document.getElementById("arena-layer").appendChild(projectile.el);
@@ -2500,16 +2531,9 @@
 
         function castArenaBasicAttack() {
             if (!arenaState.enemies.length) return;
-            // Find closest enemy that isn't already effectively dead from pending shots
-            const target = [...arenaState.enemies]
-                .filter(e => !isEnemyEffectivelyDead(e))
-                .sort((a, b) =>
-                    Math.hypot(a.x - arenaState.player.x, a.y - arenaState.player.y) - Math.hypot(b.x - arenaState.player.x, b.y - arenaState.player.y)
-                )[0];
-            if (!target) return; // all enemies already have enough shots
-            const dx = target.x - arenaState.player.x;
-            const dy = target.y - arenaState.player.y;
-            const dist = Math.hypot(dx, dy) || 1;
+            const target = [...arenaState.enemies].sort((a, b) =>
+                Math.hypot(a.x - arenaState.player.x, a.y - arenaState.player.y) - Math.hypot(b.x - arenaState.player.x, b.y - arenaState.player.y)
+            )[0];
             const projectile = {
                 x: arenaState.player.x,
                 y: arenaState.player.y,
@@ -2517,8 +2541,6 @@
                 speed: 285,
                 target,
                 damage: 1,
-                vx: dx / dist,
-                vy: dy / dist,
                 el: createArenaEntity("arena-projectile", arenaState.player.x, arenaState.player.y, "opacity-80")
             };
             document.getElementById("arena-layer").appendChild(projectile.el);
@@ -2535,16 +2557,19 @@
             const spread = 0.7;
             for (let i = 0; i < count; i++) {
                 const angle = baseAngle - spread / 2 + (spread * (count === 1 ? 0.5 : i / (count - 1)));
+                const ghostTarget = {
+                    x: arenaState.player.x + Math.cos(angle) * 220,
+                    y: arenaState.player.y + Math.sin(angle) * 220,
+                    radius: 1
+                };
                 const projectile = {
                     x: arenaState.player.x,
                     y: arenaState.player.y,
                     radius: 4,
                     speed: 250 + level * 18,
-                    vx: Math.cos(angle),
-                    vy: Math.sin(angle),
-                    target: { x: arenaState.player.x + Math.cos(angle) * 220, y: arenaState.player.y + Math.sin(angle) * 220, radius: 1 },
+                    target: ghostTarget,
                     damage: level >= 4 ? 2 : 1,
-                    maxRange: 280,
+                    maxRange: 230,
                     travelled: 0,
                     spreadShot: true,
                     el: createArenaEntity("arena-projectile", arenaState.player.x, arenaState.player.y, "opacity-80")
@@ -2579,12 +2604,7 @@
             const chainTargets = [...arenaState.enemies].sort((a, b) =>
                 Math.hypot(a.x - arenaState.player.x, a.y - arenaState.player.y) - Math.hypot(b.x - arenaState.player.x, b.y - arenaState.player.y)
             ).slice(0, Math.min(4 + level, arenaState.enemies.length));
-
-            // Fire visual bouncing balls toward each chain target
-            if (chainTargets.length > 0) {
-                fireBouncingBall(arenaState.player.x, arenaState.player.y, chainTargets, 0, 2 + Math.floor(level / 2));
-            }
-
+            chainTargets.forEach(enemy => damageArenaEnemy(enemy, 2 + Math.floor(level / 2)));
             arenaState.player.health = Math.min(100, arenaState.player.health + 2 + level);
             const wave = document.createElement("div");
             wave.className = "arena-shield-wave";
@@ -2593,29 +2613,6 @@
             document.getElementById("arena-layer").appendChild(wave);
             setTimeout(() => wave.remove(), 550);
             addArenaLog(`Root Sentinel purge chain activated.`);
-        }
-
-        function fireBouncingBall(fromX, fromY, targets, targetIndex, damage) {
-            if (!arenaState || targetIndex >= targets.length) return;
-            const target = targets[targetIndex];
-            if (!arenaState.enemies.includes(target)) {
-                // skip to next target
-                fireBouncingBall(fromX, fromY, targets, targetIndex + 1, damage);
-                return;
-            }
-            const ball = createArenaEntity("arena-bouncing-ball", fromX, fromY);
-            document.getElementById("arena-layer").appendChild(ball);
-            const bouncingProjectile = {
-                x: fromX, y: fromY,
-                radius: 5, speed: 380,
-                target,
-                damage,
-                bounceTargets: targets,
-                bounceIndex: targetIndex,
-                isBouncing: true,
-                el: ball
-            };
-            arenaState.projectiles.push(bouncingProjectile);
         }
 
         function castArenaShieldWave(level) {
@@ -2668,20 +2665,15 @@
                 enemy.el.style.left = `${enemy.x}px`;
                 enemy.el.style.top = `${enemy.y}px`;
 
-                // Update boss/miniboss health bars
-                if ((enemy.isBoss || enemy.isMiniboss) && enemy.maxHealth) {
-                    const fillClass = enemy.isBoss ? ".boss-health-fill" : ".miniboss-health-fill";
-                    const fill = enemy.el.querySelector(fillClass);
-                    if (fill) fill.style.width = `${Math.max(0, (enemy.health / enemy.maxHealth) * 100)}%`;
-                }
-
                 const playerDist = Math.hypot(arenaState.player.x - enemy.x, arenaState.player.y - enemy.y);
                 if (playerDist < enemy.radius + arenaState.player.radius + 4 && arenaState.player.hitCooldown <= 0) {
                     const baseDamage = enemy.type === "ransomware" ? 14 : enemy.type === "trojan" ? 18 : enemy.type === "worm" ? 7 : enemy.type === "spyware" ? 8 : 9;
                     const finalDamage = Math.max(4, Math.round(baseDamage * (1 - (arenaState.player.damageReduction || 0))));
                     arenaState.player.health = Math.max(0, arenaState.player.health - finalDamage);
                     arenaState.player.hitCooldown = 0.8;
-                    addArenaLog(`${enemy.type.toUpperCase()} breach! -${finalDamage} integrity.`);
+                    updateScore(ARENA_DAMAGE_PENALTY);
+                    arenaScore = totalScore;
+                    addArenaLog(`${enemy.type.toUpperCase()} breach for ${finalDamage}. -120 points.`);
                 }
 
                 arenaState.rings.forEach(ring => {
@@ -2690,75 +2682,22 @@
             });
         }
 
-        // Track pending damage from in-flight projectiles per enemy
-        function getEnemyPendingDamage(enemy) {
-            if (!arenaState) return 0;
-            return arenaState.projectiles.reduce((sum, p) => {
-                if (p.target === enemy && !p.isBouncing && !p.spreadShot) return sum + (p.damage || 1);
-                return sum;
-            }, 0);
-        }
-
-        function isEnemyEffectivelyDead(enemy) {
-            return (enemy.health - getEnemyPendingDamage(enemy)) <= 0;
-        }
-
         function updateArenaProjectiles(dt) {
-            const W = arenaState.width;
-            const H = arenaState.height;
             arenaState.projectiles.slice().forEach(projectile => {
-                // --- Bouncing ball logic ---
-                if (projectile.isBouncing) {
-                    // If current target is gone, skip to next
-                    if (!arenaState.enemies.includes(projectile.target)) {
-                        let found = false;
-                        for (let ni = projectile.bounceIndex + 1; ni < projectile.bounceTargets.length; ni++) {
-                            if (arenaState.enemies.includes(projectile.bounceTargets[ni])) {
-                                projectile.bounceIndex = ni;
-                                projectile.target = projectile.bounceTargets[ni];
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (!found) {
-                            projectile.el.remove();
-                            arenaState.projectiles = arenaState.projectiles.filter(item => item !== projectile);
-                            return;
-                        }
-                    }
-                    const dx = projectile.target.x - projectile.x;
-                    const dy = projectile.target.y - projectile.y;
-                    const dist = Math.hypot(dx, dy) || 1;
-                    projectile.x += (dx / dist) * projectile.speed * dt;
-                    projectile.y += (dy / dist) * projectile.speed * dt;
-                    projectile.el.style.left = `${projectile.x}px`;
-                    projectile.el.style.top = `${projectile.y}px`;
-                    if (dist < projectile.target.radius + projectile.radius + 3) {
-                        damageArenaEnemy(projectile.target, projectile.damage);
-                        let nextFound = false;
-                        for (let ni = projectile.bounceIndex + 1; ni < projectile.bounceTargets.length; ni++) {
-                            if (arenaState.enemies.includes(projectile.bounceTargets[ni])) {
-                                projectile.bounceIndex = ni;
-                                projectile.target = projectile.bounceTargets[ni];
-                                nextFound = true;
-                                break;
-                            }
-                        }
-                        if (!nextFound) {
-                            projectile.el.remove();
-                            arenaState.projectiles = arenaState.projectiles.filter(item => item !== projectile);
-                        }
-                    }
+                if (!projectile.spreadShot && !arenaState.enemies.includes(projectile.target)) {
+                    projectile.el.remove();
+                    arenaState.projectiles = arenaState.projectiles.filter(item => item !== projectile);
                     return;
                 }
-
-                // --- Spread/shrapnel shots: travel in a fixed direction ---
+                const dx = projectile.target.x - projectile.x;
+                const dy = projectile.target.y - projectile.y;
+                const dist = Math.hypot(dx, dy) || 1;
+                projectile.x += (dx / dist) * projectile.speed * dt;
+                projectile.y += (dy / dist) * projectile.speed * dt;
+                projectile.travelled = (projectile.travelled || 0) + projectile.speed * dt;
+                projectile.el.style.left = `${projectile.x}px`;
+                projectile.el.style.top = `${projectile.y}px`;
                 if (projectile.spreadShot) {
-                    projectile.x += projectile.vx * projectile.speed * dt;
-                    projectile.y += projectile.vy * projectile.speed * dt;
-                    projectile.travelled = (projectile.travelled || 0) + projectile.speed * dt;
-                    projectile.el.style.left = `${projectile.x}px`;
-                    projectile.el.style.top = `${projectile.y}px`;
                     const hit = arenaState.enemies.find(enemy => Math.hypot(enemy.x - projectile.x, enemy.y - projectile.y) < enemy.radius + projectile.radius + 2);
                     if (hit) {
                         damageArenaEnemy(hit, projectile.damage);
@@ -2766,60 +2705,12 @@
                         arenaState.projectiles = arenaState.projectiles.filter(item => item !== projectile);
                         return;
                     }
-                    if (projectile.travelled >= projectile.maxRange ||
-                        projectile.x < -30 || projectile.x > W + 30 ||
-                        projectile.y < -30 || projectile.y > H + 30) {
-                        projectile.el.remove();
-                        arenaState.projectiles = arenaState.projectiles.filter(item => item !== projectile);
-                    }
-                    return;
-                }
-
-                // --- Targeted shots ---
-                const targetAlive = arenaState.enemies.includes(projectile.target);
-                if (!targetAlive) {
-                    // Convert to freefly using last known velocity direction
-                    projectile.freefly = true;
-                }
-
-                let dx, dy, dist;
-                if (projectile.freefly) {
-                    // Continue in last direction
-                    dx = projectile.vx || 0;
-                    dy = projectile.vy || 0;
-                    dist = 1;
-                    projectile.x += dx * projectile.speed * dt;
-                    projectile.y += dy * projectile.speed * dt;
-                    projectile.travelled = (projectile.travelled || 0) + projectile.speed * dt;
-                    projectile.el.style.left = `${projectile.x}px`;
-                    projectile.el.style.top = `${projectile.y}px`;
-                    // Hit any enemy it crosses
-                    const hit = arenaState.enemies.find(e => Math.hypot(e.x - projectile.x, e.y - projectile.y) < e.radius + projectile.radius + 2);
-                    if (hit) {
-                        damageArenaEnemy(hit, projectile.damage);
+                    if (projectile.travelled >= projectile.maxRange) {
                         projectile.el.remove();
                         arenaState.projectiles = arenaState.projectiles.filter(item => item !== projectile);
                         return;
                     }
-                    // Remove when off-screen
-                    if (projectile.x < -30 || projectile.x > W + 30 || projectile.y < -30 || projectile.y > H + 30) {
-                        projectile.el.remove();
-                        arenaState.projectiles = arenaState.projectiles.filter(item => item !== projectile);
-                    }
-                    return;
-                }
-
-                dx = projectile.target.x - projectile.x;
-                dy = projectile.target.y - projectile.y;
-                dist = Math.hypot(dx, dy) || 1;
-                // Store velocity direction for freefly fallback
-                projectile.vx = dx / dist;
-                projectile.vy = dy / dist;
-                projectile.x += projectile.vx * projectile.speed * dt;
-                projectile.y += projectile.vy * projectile.speed * dt;
-                projectile.el.style.left = `${projectile.x}px`;
-                projectile.el.style.top = `${projectile.y}px`;
-                if (dist < projectile.target.radius + projectile.radius + 2) {
+                } else if (dist < projectile.target.radius + projectile.radius + 2) {
                     damageArenaEnemy(projectile.target, projectile.damage);
                     projectile.el.remove();
                     arenaState.projectiles = arenaState.projectiles.filter(item => item !== projectile);
@@ -2827,197 +2718,10 @@
             });
         }
 
-        function checkArenaMinibossSpawn() {
-            if (!arenaState || arenaState.paused) return;
-            // Every 60 seconds
-            if (arenaState.minibossTimer >= 60) {
-                arenaState.minibossTimer = 0;
-                spawnArenaMiniboss();
-            }
-        }
-
-        function checkArenaBossSpawn() {
-            if (!arenaState || arenaState.paused) return;
-            // Every 150 seconds (2.5 min)
-            if (arenaState.bossTimer >= 150) {
-                arenaState.bossTimer = 0;
-                spawnArenaBoss();
-            }
-        }
-
-        function spawnArenaMiniboss() {
-            const layer = document.getElementById("arena-layer");
-            const side = Math.floor(Math.random() * 4);
-            let x = arenaState.width / 2, y = -30;
-            if (side === 0) { x = Math.random() * arenaState.width; y = -30; }
-            if (side === 1) { x = arenaState.width + 30; y = Math.random() * arenaState.height; }
-            if (side === 2) { x = Math.random() * arenaState.width; y = arenaState.height + 30; }
-            if (side === 3) { x = -30; y = Math.random() * arenaState.height; }
-            const maxHp = 35 + arenaState.elapsed * 0.3;
-            const el = createArenaEntity("arena-enemy-miniboss", x, y);
-            el.style.position = "absolute";
-            el.style.overflow = "visible";
-            el.innerHTML = `<div class="miniboss-health-bar"><div class="miniboss-health-fill" style="width:100%"></div></div>`;
-            layer.appendChild(el);
-            const enemy = { x, y, type: "miniboss", radius: 20, speed: 50 + arenaState.elapsed * 0.2, health: maxHp, maxHealth: maxHp, xpValue: 8, el, isMiniboss: true };
-            arenaState.enemies.push(enemy);
-            addArenaLog("⚠️ MINI-BOSS INCOMING! Defeat it for a power drop.");
-        }
-
-        function spawnArenaBoss() {
-            const layer = document.getElementById("arena-layer");
-            const side = Math.floor(Math.random() * 4);
-            let x = arenaState.width / 2, y = -50;
-            if (side === 0) { x = Math.random() * arenaState.width; y = -50; }
-            if (side === 1) { x = arenaState.width + 50; y = Math.random() * arenaState.height; }
-            if (side === 2) { x = Math.random() * arenaState.width; y = arenaState.height + 50; }
-            if (side === 3) { x = -50; y = Math.random() * arenaState.height; }
-            const maxHp = 120 + arenaState.elapsed * 0.5;
-            const el = createArenaEntity("arena-enemy-boss", x, y);
-            el.style.position = "absolute";
-            el.style.overflow = "visible";
-            el.innerHTML = `<div class="boss-health-bar"><div class="boss-health-fill" style="width:100%"></div></div>`;
-            layer.appendChild(el);
-            const enemy = { x, y, type: "boss", radius: 30, speed: 36 + arenaState.elapsed * 0.15, health: maxHp, maxHealth: maxHp, xpValue: 20, el, isBoss: true };
-            arenaState.enemies.push(enemy);
-            addArenaLog("🔴 BOSS INCOMING! A massive threat approaches. Defeat it for a full heal + upgrades.");
-        }
-
-        function spawnBossDrop(x, y, bossType) {
-            if (bossType === "miniboss") {
-                // Show miniboss drop: random power (choose from 3)
-                showMinibossPowerChoice();
-            } else if (bossType === "boss") {
-                // Full heal then show 5-upgrade choice (pick 2)
-                arenaState.player.health = 100;
-                addArenaLog("💚 Full integrity restored from Boss drop!");
-                showBossUpgradeChoice();
-            }
-        }
-
-        function showMinibossPowerChoice() {
-            pauseArena();
-            const overlay = document.getElementById("arena-levelup-overlay");
-            const options = getArenaUpgradeOptions(3);
-            overlay.innerHTML = `
-                <div class="w-full max-w-4xl bg-slate-950 border border-yellow-500/40 rounded-2xl p-8 space-y-6">
-                    <div class="text-center">
-                        <div class="text-yellow-400 uppercase tracking-[0.2em] text-xs mb-2">Mini-Boss Defeated!</div>
-                        <h3 class="text-3xl font-black text-white uppercase">Choose a Power Drop</h3>
-                        <p class="text-slate-400 mt-2">The mini-boss dropped one of these upgrades. Pick one to keep.</p>
-                    </div>
-                    <div id="miniboss-drop-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
-                </div>`;
-            const grid = overlay.querySelector("#miniboss-drop-grid");
-            options.forEach(option => {
-                const accent = getArenaAccent(option.key);
-                const card = document.createElement("button");
-                card.className = "text-left p-5 bg-slate-900 border rounded-xl hover:bg-slate-800 transition-all";
-                card.style.borderColor = `${accent}55`;
-                card.innerHTML = `
-                    <div class="flex items-start justify-between gap-4">
-                        <div class="upgrade-card-icon">${getArenaAbilityIcon(option.key, accent)}</div>
-                        <div class="synergy-chip">Link ${arenaAbilities[option.key].partner ? "->" : ""} ${getArenaPartnerLabel(option.key)}</div>
-                    </div>
-                    <div class="mt-4 text-xs uppercase tracking-[0.2em] mb-2" style="color:${accent}">${arenaAbilities[option.key].name}</div>
-                    <div class="text-white font-bold mb-2">${option.type === "new" ? "Unlock" : `Upgrade to Level ${option.toLevel}`}</div>
-                    <div class="text-sm text-slate-400">${option.type === "new" ? arenaAbilities[option.key].desc : getArenaAbilityUpgradeText(option.key, option.toLevel)}</div>`;
-                card.onclick = () => {
-                    applyArenaUpgrade(option, true);
-                    document.getElementById("arena-levelup-overlay").classList.add("hidden");
-                    resumeArena();
-                    addArenaLog(`Mini-boss power collected: ${arenaAbilities[option.key].name}`);
-                };
-                grid.appendChild(card);
-            });
-            overlay.classList.remove("hidden");
-        }
-
-        function showBossUpgradeChoice() {
-            pauseArena();
-            const overlay = document.getElementById("arena-levelup-overlay");
-            const allOptions = getArenaUpgradeOptions(5);
-            // Player picks 2 out of 5
-            let picked = [];
-            function renderBossOverlay() {
-                overlay.innerHTML = `
-                    <div class="w-full max-w-5xl bg-slate-950 border border-pink-500/40 rounded-2xl p-8 space-y-6">
-                        <div class="text-center">
-                            <div class="text-pink-400 uppercase tracking-[0.2em] text-xs mb-2">Boss Defeated!</div>
-                            <h3 class="text-3xl font-black text-white uppercase">Choose 2 Upgrades</h3>
-                            <p class="text-slate-400 mt-2">Full integrity restored. Select <span id="boss-picks-left" class="text-pink-300 font-bold">${2 - picked.length}</span> more upgrade(s) from the boss loot.</p>
-                        </div>
-                        <div id="boss-drop-grid" class="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-3"></div>
-                    </div>`;
-                const grid = overlay.querySelector("#boss-drop-grid");
-                allOptions.forEach((option, idx) => {
-                    const accent = getArenaAccent(option.key);
-                    const alreadyPicked = picked.includes(idx);
-                    const card = document.createElement("button");
-                    card.className = `text-left p-4 bg-slate-900 border rounded-xl transition-all ${alreadyPicked ? "opacity-40 pointer-events-none border-slate-600" : "hover:bg-slate-800"}`;
-                    card.style.borderColor = alreadyPicked ? "#334155" : `${accent}55`;
-                    card.innerHTML = `
-                        <div class="upgrade-card-icon mb-3">${getArenaAbilityIcon(option.key, accent)}</div>
-                        <div class="text-xs uppercase tracking-[0.2em] mb-1" style="color:${accent}">${arenaAbilities[option.key].name}</div>
-                        <div class="text-white font-bold text-sm mb-1">${option.type === "new" ? "Unlock" : `→ Level ${option.toLevel}`}</div>
-                        <div class="text-xs text-slate-400">${option.type === "new" ? arenaAbilities[option.key].desc : getArenaAbilityUpgradeText(option.key, option.toLevel)}</div>`;
-                    if (!alreadyPicked) {
-                        card.onclick = () => {
-                            picked.push(idx);
-                            applyArenaUpgrade(option, true);
-                            addArenaLog(`Boss loot collected: ${arenaAbilities[option.key].name}`);
-                            if (picked.length >= 2) {
-                                overlay.classList.add("hidden");
-                                resumeArena();
-                                updateArenaSidebar();
-                            } else {
-                                renderBossOverlay();
-                            }
-                        };
-                    }
-                    grid.appendChild(card);
-                });
-            }
-            renderBossOverlay();
-            overlay.classList.remove("hidden");
-        }
-
-        function getArenaUpgradeOptions(count = 3) {
-            maybeUnlockArenaSecret();
-            const allKeys = Object.keys(arenaAbilities).filter(key => key !== "overclock" || arenaState.abilities.overclock);
-            const ownedNormalItems = Object.keys(arenaState.abilities).filter(key => !["basic", "overclock"].includes(key)).length;
-            const canUnlockMore = ownedNormalItems < 8;
-            const unlocks = canUnlockMore
-                ? allKeys.filter(key => !arenaState.abilities[key]).map(key => ({ key, type: "new", toLevel: 1 }))
-                : [];
-            const upgrades = allKeys.filter(key => arenaState.abilities[key] && arenaState.abilities[key] < 5).map(key => ({ key, type: "upgrade", toLevel: arenaState.abilities[key] + 1 }));
-            const combined = [...unlocks, ...upgrades];
-            combined.sort(() => 0.5 - Math.random());
-            const chosen = [];
-            for (const option of combined) {
-                if (!chosen.find(item => item.key === option.key)) chosen.push(option);
-                if (chosen.length >= count) break;
-            }
-            return chosen;
-        }
-
         function damageArenaEnemy(enemy, amount) {
             if (!arenaState || !arenaState.enemies.includes(enemy)) return;
             enemy.health -= amount;
-            // Flash red on hit
-            if (enemy.el && enemy.health > 0) {
-                enemy.el.classList.remove("arena-enemy-hit");
-                void enemy.el.offsetWidth; // reflow to restart animation
-                enemy.el.classList.add("arena-enemy-hit");
-                setTimeout(() => { if (enemy.el) enemy.el.classList.remove("arena-enemy-hit"); }, 350);
-            }
             if (enemy.health <= 0) {
-                // Check if it's a miniboss or boss drop
-                if (enemy.isBoss) {
-                    spawnBossDrop(enemy.x, enemy.y, "boss");
-                } else if (enemy.isMiniboss) {
-                    spawnBossDrop(enemy.x, enemy.y, "miniboss");
-                }
                 enemy.el.remove();
                 arenaState.enemies = arenaState.enemies.filter(item => item !== enemy);
                 const orb = {
@@ -3074,46 +2778,22 @@
             arenaState.level += 1;
             arenaState.nextXp = getArenaLevelTarget(arenaState.level);
             arenaLevelupCount++;
-            pauseArena();
+            arenaState.paused = true;
             showArenaLevelupQuestion();
         }
 
         function getNextArenaQuestion() {
-            // Rotate topics evenly
-            const topics = ["Cipher", "Phishing", "Password"];
-            if (arenaState.topicIndex === undefined) arenaState.topicIndex = 0;
+            const topics = ["cipher", "phishing", "password"];
+            if (!arenaState.topicIndex) arenaState.topicIndex = 0;
             const topicKey = topics[arenaState.topicIndex % topics.length];
             arenaState.topicIndex += 1;
-
-            const pool = getArenaQuestionPool().filter(q => q.topic === topicKey);
-
-            // Never show a correctly-answered question again
-            const correctlyAnswered = arenaState.correctlyAnswered || [];
-            const available = pool.filter(q => !correctlyAnswered.includes(q.q));
-
-            // Also skip questions asked in this session (but not yet correctly answered) if possible
-            const usedButNotCorrect = arenaState.usedQuestions || [];
-            const fresh = available.filter(q => !usedButNotCorrect.includes(q.q));
-
-            // Pick from freshest pool, fall back to available (skipping only correctly answered)
-            const source = fresh.length > 0 ? fresh : available.length > 0 ? available : pool;
-
-            const selected = source[Math.floor(Math.random() * source.length)];
-
-            // Track as used
-            if (!arenaState.usedQuestions) arenaState.usedQuestions = [];
-            if (!arenaState.usedQuestions.includes(selected.q)) arenaState.usedQuestions.push(selected.q);
-
-            // Return with shuffled answer order
-            return shuffleQuestionAnswers(selected);
-        }
-
-        // Call this when a question is answered correctly
-        function markArenaQuestionCorrect(questionText) {
-            if (!arenaState.correctlyAnswered) arenaState.correctlyAnswered = [];
-            if (!arenaState.correctlyAnswered.includes(questionText)) {
-                arenaState.correctlyAnswered.push(questionText);
-            }
+            const topicPool = getArenaThemeQuestions(topicKey);
+            const available = topicPool.filter(question => !arenaState.usedQuestions.includes(question.q));
+            const pool = available.length ? available : topicPool;
+            const selected = pool[Math.floor(Math.random() * pool.length)];
+            arenaState.usedQuestions.push(selected.q);
+            if (arenaState.usedQuestions.length > 18) arenaState.usedQuestions = [selected.q];
+            return selected;
         }
 
         function showArenaLevelupQuestion() {
@@ -3141,12 +2821,13 @@
                     Array.from(container.children).forEach(child => child.classList.add("pointer-events-none", "opacity-60"));
                     const feedback = document.getElementById("arena-levelup-q-feedback");
                     if (index === question.c) {
-                        markArenaQuestionCorrect(question.q);
-                        feedback.innerText = "Correct. Upgrade channel unlocked.";
+                        updateScore(ARENA_QUESTION_REWARD);
+                        feedback.innerText = "Correct. Upgrade channel unlocked. +500 points.";
                         feedback.className = "text-sm text-emerald-400";
                         setTimeout(showArenaLevelupChoices, 850);
                     } else {
-                        feedback.innerText = `Incorrect. The best answer was "${question.opts[question.c]}". ${question.why} Loading a new question.`;
+                        updateScore(ARENA_QUESTION_PENALTY);
+                        feedback.innerText = `Incorrect. The best answer was "${question.opts[question.c]}". ${question.why} -150 points. A new question is loading now.`;
                         feedback.className = "text-sm text-red-400";
                         setTimeout(showArenaLevelupQuestion, 1000);
                     }
@@ -3158,7 +2839,7 @@
 
         function showArenaLevelupChoices() {
             const overlay = document.getElementById("arena-levelup-overlay");
-            const options = getArenaUpgradeOptions(3);
+            const options = getArenaUpgradeOptions();
             overlay.innerHTML = `
                 <div class="w-full max-w-4xl bg-slate-950 border border-cyan-500/30 rounded-2xl p-8 space-y-6">
                     <div class="text-center">
@@ -3190,34 +2871,35 @@
             overlay.classList.remove("hidden");
         }
 
-        function applyArenaUpgrade(option, skipOverlayClose = false) {
+        function getArenaUpgradeOptions() {
+            maybeUnlockArenaSecret();
+            const allKeys = Object.keys(arenaAbilities).filter(key => key !== "overclock" || arenaState.abilities.overclock);
+            const ownedNormalItems = Object.keys(arenaState.abilities).filter(key => !["basic", "overclock"].includes(key)).length;
+            const canUnlockMore = ownedNormalItems < 8;
+            const unlocks = canUnlockMore
+                ? allKeys.filter(key => !arenaState.abilities[key]).map(key => ({ key, type: "new", toLevel: 1 }))
+                : [];
+            const upgrades = allKeys.filter(key => arenaState.abilities[key] && arenaState.abilities[key] < 5).map(key => ({ key, type: "upgrade", toLevel: arenaState.abilities[key] + 1 }));
+            const combined = [...unlocks, ...upgrades];
+            combined.sort(() => 0.5 - Math.random());
+            const chosen = [];
+            for (const option of combined) {
+                if (!chosen.find(item => item.key === option.key)) chosen.push(option);
+                if (chosen.length >= 3) break;
+            }
+            return chosen;
+        }
+
+        function applyArenaUpgrade(option) {
             const current = arenaState.abilities[option.key] || 0;
             arenaState.abilities[option.key] = Math.min(5, option.type === "new" ? 1 : current + 1);
             maybeUnlockArenaSecret();
-            addArenaLog(`${arenaAbilities[option.key].name} ${option.type === "new" ? "online" : `upgraded to level ${arenaState.abilities[option.key]}`}.`);
-            if (!skipOverlayClose) {
-                document.getElementById("arena-levelup-overlay").classList.add("hidden");
-                resumeArena();
-            }
-            updateArenaSidebar();
-        }
-
-        function pauseArena() {
-            if (!arenaState) return;
-            arenaState.paused = true;
-            const layer = document.getElementById("arena-layer");
-            if (layer) layer.classList.add("paused-hidden");
-            const hud = document.getElementById("arena-hud-bar");
-            if (hud) hud.style.visibility = "hidden";
-        }
-
-        function resumeArena() {
-            if (!arenaState) return;
+            updateScore(ARENA_LEVELUP_REWARD);
+            arenaScore = totalScore;
+            addArenaLog(`${arenaAbilities[option.key].name} ${option.type === "new" ? "online" : `upgraded to level ${arenaState.abilities[option.key]}`}. +900 points.`);
+            document.getElementById("arena-levelup-overlay").classList.add("hidden");
             arenaState.paused = false;
-            const layer = document.getElementById("arena-layer");
-            if (layer) layer.classList.remove("paused-hidden");
-            const hud = document.getElementById("arena-hud-bar");
-            if (hud) hud.style.visibility = "visible";
+            updateArenaSidebar();
         }
 
         function maybeUnlockArenaSecret() {
@@ -3265,31 +2947,19 @@
         }
 
         function updateArenaHud() {
-            document.getElementById("arena-health").innerText = Math.ceil(arenaState.player.health);
+            document.getElementById("arena-score").innerText = totalScore;
+            document.getElementById("arena-health").innerText = arenaState.player.health;
             document.getElementById("arena-xp").innerText = arenaState.xp;
             document.getElementById("arena-next-xp").innerText = arenaState.nextXp;
-            const levelEl = document.getElementById("arena-level-disp");
-            if (levelEl) levelEl.innerText = arenaState.level;
             document.getElementById("arena-time").innerText = `${Math.floor(arenaState.elapsed)}s`;
             updateArenaSidebar();
         }
 
         function finishArenaRun() {
             if (!arenaState) return;
-            const survived = Math.floor(arenaState.elapsed);
-            const lvl = arenaState.level;
-            const utilities = Object.keys(arenaState.abilities).filter(key => key !== "basic").length;
-            const correctCount = (arenaState.correctlyAnswered || []).length;
-            document.getElementById("final-display-content").innerText =
-                `Threat Arena: survived ${survived}s · reached level ${lvl} · ${utilities} utilities online · ${correctCount} security questions answered correctly.`;
-            // For arena, show survival time as the "score"
-            document.getElementById("final-score").innerText = `${survived}s survived`;
+            document.getElementById("final-display-content").innerText = `Threat Arena Down: ${arenaThemes[arenaThemeKey].label} route survived ${Math.floor(arenaState.elapsed)} seconds, reached level ${arenaState.level}, and brought ${Object.keys(arenaState.abilities).filter(key => key !== "basic").length} utilities online before the malware swarm broke through.`;
             stopArenaGame();
-            // Show win-view with arena-specific title, skip score checks
-            document.getElementById("win-title").innerText = "Threat Arena Complete";
-            document.getElementById("win-title").className = "text-5xl font-black text-cyan-400 uppercase tracking-tighter";
-            document.getElementById("best-player-tag").classList.add("hidden");
-            showView("win-view");
+            endGame("arena");
         }
 
         function endGame(mode) {
@@ -3311,7 +2981,9 @@
                         ? "Phishing Mission Complete"
                         : mode === "password"
                             ? "Password Mission Complete"
-                            : "Mission Complete";
+                            : mode === "arena"
+                                ? "Threat Arena Complete"
+                                : "Mission Complete";
                 document.getElementById("win-title").className = "text-5xl font-black text-emerald-400 uppercase tracking-tighter";
                 document.getElementById("best-player-tag").classList.add("hidden");
             }
