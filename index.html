@@ -26,9 +26,9 @@
         .arena-stage { position: relative; min-height: 460px; border-radius: 20px; overflow: hidden; background: radial-gradient(circle at top, rgba(14, 165, 233, 0.15), rgba(2, 6, 23, 0.95) 55%), linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 1)); border: 1px solid rgba(56, 189, 248, 0.25); }
         .arena-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(56, 189, 248, 0.09) 1px, transparent 1px), linear-gradient(90deg, rgba(56, 189, 248, 0.09) 1px, transparent 1px); background-size: 34px 34px; opacity: 0.28; pointer-events: none; }
         .arena-entity { position: absolute; transform: translate(-50%, -50%); pointer-events: none; }
-        .arena-player { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(180deg, #d1fae5 0%, #22c55e 28%, #0f172a 28%, #0f172a 72%, #14532d 72%, #bbf7d0 100%); box-shadow: 0 0 26px rgba(34, 197, 94, 0.65), inset 0 0 0 2px rgba(240, 253, 244, 0.55); border: 2px solid rgba(187, 247, 208, 0.7); }
-        .arena-player::before { content: ""; position: absolute; width: 12px; height: 8px; left: 50%; top: 34%; transform: translate(-50%, -50%); border-radius: 2px; background: rgba(186, 230, 253, 0.9); box-shadow: 0 0 8px rgba(56, 189, 248, 0.7); }
-        .arena-player::after { content: ""; position: absolute; width: 16px; height: 3px; left: 50%; bottom: 4px; transform: translateX(-50%); border-radius: 9999px; background: rgba(187, 247, 208, 0.75); }
+        .arena-player { width: 34px; height: 34px; border-radius: 50% 50% 45% 45%; background: radial-gradient(ellipse at 40% 35%, #86efac, #22c55e 55%, #15803d 100%); box-shadow: 0 0 22px rgba(34,197,94,0.75), 0 0 8px rgba(134,239,172,0.5); border: 1.5px solid rgba(187,247,208,0.6); position: relative; }
+        .arena-player::before { content: ""; position: absolute; width: 10px; height: 13px; left: 5px; top: 9px; border-radius: 50%; background: #0f172a; box-shadow: inset -2px -2px 0 0 rgba(56,189,248,0.45); }
+        .arena-player::after { content: ""; position: absolute; width: 10px; height: 13px; right: 5px; top: 9px; border-radius: 50%; background: #0f172a; box-shadow: inset -2px -2px 0 0 rgba(56,189,248,0.45); }
         .arena-enemy, .arena-enemy-worm, .arena-enemy-ransomware, .arena-enemy-spyware, .arena-enemy-trojan { border-radius: 9999px; }
         .arena-enemy { width: 22px; height: 22px; background: radial-gradient(circle at 35% 35%, #fca5a5, #dc2626 55%, #7f1d1d 100%); box-shadow: 0 0 16px rgba(239, 68, 68, 0.6); border: 1px solid rgba(254, 202, 202, 0.35); animation: virusGlitch 1.15s steps(2) infinite; }
         .arena-enemy-worm { width: 16px; height: 16px; background: radial-gradient(circle at 35% 35%, #fdba74, #ea580c 58%, #9a3412 100%); box-shadow: 0 0 16px rgba(249, 115, 22, 0.75); animation: virusGlitchFast 0.7s steps(2) infinite; }
@@ -70,6 +70,26 @@
         .arena-joystick-knob { width: 42px; height: 42px; border-radius: 9999px; background: rgba(56, 189, 248, 0.62); border: 2px solid rgba(224, 242, 254, 0.55); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 16px rgba(56, 189, 248, 0.45); }
         #arena-levelup-overlay, #arena-levelup-overlay * { touch-action: auto; }
         #arena-levelup-overlay button, #arena-question-options button, #arena-ability-options button, #arena-levelup-q-options button, #arena-upgrade-grid button, #password-options button, #password-trivia-options button { touch-action: manipulation; }
+        #password-options button, #password-trivia-options button { position: relative; z-index: 1; min-height: 92px; -webkit-tap-highlight-color: transparent; }
+        .arena-enemy-miniboss { width: 38px; height: 38px; border-radius: 10px; background: radial-gradient(circle at 35% 35%, #fde68a, #f59e0b 42%, #92400e 100%); box-shadow: 0 0 24px rgba(245,158,11,0.8); border: 2px solid rgba(253,230,138,0.7); }
+        .arena-enemy-boss { width: 62px; height: 62px; border-radius: 16px; background: radial-gradient(circle at 35% 35%, #fecdd3, #ec4899 42%, #500724 100%); box-shadow: 0 0 36px rgba(236,72,153,0.88); border: 3px solid rgba(249,168,212,0.8); }
+        .enemy-projectile { width: 10px; height: 10px; border-radius: 9999px; background: radial-gradient(circle at 35% 35%, #fecaca, #dc2626 70%); box-shadow: 0 0 12px rgba(220,38,38,0.85); }
+        .enemy-projectile-boss { width: 14px; height: 14px; border-radius: 9999px; background: radial-gradient(circle at 35% 35%, #fbcfe8, #ec4899 68%); box-shadow: 0 0 16px rgba(236,72,153,0.85); }
+        .cyber-chess-board { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); width: min(100%, 620px); aspect-ratio: 1 / 1; border-radius: 20px; overflow: hidden; border: 1px solid rgba(236, 72, 153, 0.28); box-shadow: 0 20px 50px rgba(15, 23, 42, 0.55); }
+        .cyber-square { position: relative; display: flex; align-items: center; justify-content: center; padding: 4px; cursor: pointer; user-select: none; transition: transform 0.12s ease, box-shadow 0.12s ease, outline-color 0.12s ease; }
+        .cyber-square-light { background: linear-gradient(180deg, rgba(251, 207, 232, 0.12), rgba(30, 41, 59, 0.92)); }
+        .cyber-square-dark { background: linear-gradient(180deg, rgba(15, 23, 42, 0.98), rgba(17, 24, 39, 0.98)); }
+        .cyber-square:hover { transform: scale(0.985); }
+        .cyber-square-selected { box-shadow: inset 0 0 0 3px rgba(250, 204, 21, 0.95); z-index: 1; }
+        .cyber-square-legal::after { content: ""; position: absolute; width: 14px; height: 14px; border-radius: 9999px; background: rgba(34, 197, 94, 0.88); box-shadow: 0 0 12px rgba(34, 197, 94, 0.55); }
+        .cyber-square-capture::after { content: ""; position: absolute; inset: 6px; border-radius: 16px; border: 3px solid rgba(248, 113, 113, 0.95); box-shadow: inset 0 0 16px rgba(248, 113, 113, 0.18); }
+        .cyber-piece { width: 100%; height: 100%; max-width: 66px; max-height: 66px; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: 0 12px 22px rgba(15, 23, 42, 0.35), inset 0 0 20px rgba(255, 255, 255, 0.06); }
+        .cyber-piece-white { background: radial-gradient(circle at 30% 25%, #fef3c7, #f59e0b 48%, #7c2d12 100%); color: #fff7ed; }
+        .cyber-piece-black { background: radial-gradient(circle at 30% 25%, #c4b5fd, #7c3aed 48%, #1e1b4b 100%); color: #eef2ff; }
+        .cyber-piece-symbol { font-size: clamp(15px, 2.2vw, 24px); }
+        .cyber-piece-label { font-size: clamp(7px, 1vw, 10px); margin-top: 4px; opacity: 0.92; }
+        .cyber-square-coord { position: absolute; left: 6px; bottom: 4px; font-size: 10px; color: rgba(148, 163, 184, 0.8); pointer-events: none; }
+        .cyber-move-log { max-height: 280px; overflow-y: auto; }
         @keyframes arenaPulse { from { opacity: 0.95; width: 20px; height: 20px; } to { opacity: 0; width: 180px; height: 180px; } }
         @keyframes arenaShieldWave { from { opacity: 0.8; width: 18px; height: 18px; } to { opacity: 0; width: 110px; height: 110px; } }
         @keyframes arenaOrb { from { transform: translate(-50%, -50%) scale(0.95); } to { transform: translate(-50%, -50%) scale(1.08); } }
@@ -91,6 +111,8 @@
             .synergy-chip { padding: 6px 10px; font-size: 10px; }
             .arena-mobile-controls { display: flex; }
             main { padding: 12px !important; }
+            .cyber-piece { border-radius: 12px; }
+            .cyber-square-coord { font-size: 9px; left: 4px; bottom: 3px; }
         }
     </style>
 </head>
@@ -117,7 +139,7 @@
                         <h2 class="text-5xl font-black text-white uppercase tracking-tighter">Mission Select</h2>
                         <p class="text-slate-400 text-lg">Choose your training discipline and push for a perfect 10,000-point run.</p>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-8">
                         <div onclick="startCipherGame()" class="nav-card p-8 bg-slate-900/60 border border-slate-800 rounded-2xl space-y-6">
                             <div class="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center">
                                 <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
@@ -465,7 +487,6 @@
                     <div class="grid grid-cols-1 2xl:grid-cols-[minmax(0,1.45fr)_minmax(320px,0.85fr)] gap-6 items-start">
                         <div class="space-y-4">
                             <div class="flex flex-col md:flex-row md:justify-between gap-3 md:items-center bg-slate-900/50 p-4 rounded-lg border border-slate-800">
-                                <div class="text-sm font-bold uppercase tracking-widest text-cyan-400">Arena Score: <span id="arena-score" class="text-white">0</span>/10000</div>
                                 <div class="text-sm font-bold uppercase tracking-widest text-emerald-400">Integrity: <span id="arena-health" class="text-white">100</span></div>
                                 <div class="text-sm font-bold uppercase tracking-widest text-yellow-400">XP: <span id="arena-xp" class="text-white">0</span>/<span id="arena-next-xp" class="text-white">6</span></div>
                                 <div class="text-sm font-bold uppercase tracking-widest text-slate-400">Survival Time: <span id="arena-time" class="text-white">0s</span></div>
@@ -975,6 +996,34 @@
             makeQuestion("Why are common words weak password choices?", ["Attackers rarely test them", "They are too long", "Attackers often try dictionary-based guesses first", "They only work on laptops"], 2, "Common words and patterns are checked early in many cracking attacks."),
             makeQuestion("What matters more for brute-force resistance?", ["Just adding one symbol to a short password", "Making the password meaningfully longer", "Using only uppercase letters", "Changing fonts in the login box"], 1, "Length usually improves brute-force resistance more than tiny complexity changes.")
         ];
+
+        const cyberChessQuestionBank = [
+            makeQuestion("What is phishing?", ["A trick that impersonates trust to steal data", "A stronger kind of password", "A hardware firewall", "A way to compress logs"], 0, "Phishing is a social engineering tactic that tries to fool people into giving up information or clicking malicious links."),
+            makeQuestion("Why does multi-factor authentication help?", ["It removes the need for passwords", "It adds another layer even if a password is stolen", "It makes every email safe", "It hides your IP address"], 1, "MFA gives attackers one more barrier to defeat after a password compromise."),
+            makeQuestion("What is the safest response to an unexpected password-reset email?", ["Click it quickly", "Reply with your username", "Go directly to the official site instead", "Forward it to everyone"], 2, "Direct navigation is safer than trusting a link that arrived unexpectedly."),
+            makeQuestion("Why is password reuse risky?", ["It helps you remember better", "One breach can unlock several accounts", "It makes brute force impossible", "It only matters for work accounts"], 1, "Leaked credentials are commonly reused in credential-stuffing attacks."),
+            makeQuestion("What does a firewall primarily do?", ["Filters network traffic by rules", "Writes stronger passwords", "Encrypts every file automatically", "Deletes phishing emails from memory"], 0, "Firewalls inspect and allow or block traffic based on policy."),
+            makeQuestion("Why are software updates important for security?", ["They make screens brighter", "They often patch known vulnerabilities", "They change company logos", "They remove the need for backups"], 1, "Attackers often target flaws that have already been fixed in newer versions."),
+            makeQuestion("What is malware?", ["Any harmful software", "A type of secure backup", "A password manager feature", "A safe email attachment"], 0, "Malware is software designed to damage, spy on, or disrupt systems."),
+            makeQuestion("What makes a password stronger against brute-force attacks?", ["Short length", "A familiar word", "More length and character variety", "Using your birth year"], 2, "Length and variety expand the search space attackers must test."),
+            makeQuestion("What is ransomware?", ["Software that forces better passwords", "Malware that locks data and demands payment", "A harmless browser popup", "A secure email protocol"], 1, "Ransomware denies access to data or systems until a ransom is paid."),
+            makeQuestion("What is the best way to verify a suspicious message from your bank?", ["Use the link in the message", "Reply and ask if it is real", "Contact the bank through its official app or number", "Ignore every future alert"], 2, "A separate trusted channel is the safest way to verify urgent financial messages."),
+            makeQuestion("What does VPN stand for?", ["Verified Private Node", "Virtual Private Network", "Variable Password Number", "Vector Protected Network"], 1, "A VPN creates an encrypted network tunnel between you and a trusted endpoint."),
+            makeQuestion("Why should you back up important files?", ["To increase spam filtering", "To recover after loss, corruption, or ransomware", "To make passwords easier", "To disable antivirus"], 1, "Backups are a core recovery control when systems fail or data is attacked."),
+            makeQuestion("What is social engineering?", ["Manipulating people into unsafe actions", "Building a network cable", "Encrypting a hard drive", "Organizing a dashboard layout"], 0, "Many attacks succeed by exploiting human trust rather than code."),
+            makeQuestion("Why is HTTPS useful?", ["It guarantees a site is honest", "It encrypts traffic in transit", "It removes all malware", "It blocks every phishing page"], 1, "HTTPS protects the connection, but you still must verify the destination."),
+            makeQuestion("What is the principle of least privilege?", ["Give every user admin rights", "Grant only the access needed for the job", "Share one account with everyone", "Allow software to install by default"], 1, "Limiting access reduces the damage a mistake or compromise can cause."),
+            makeQuestion("What should you do before opening an unexpected attachment?", ["Open it first and decide later", "Verify the sender and context first", "Rename it so it becomes safe", "Upload it publicly for inspection"], 1, "Unexpected attachments are a common delivery method for malware and scams.")
+        ];
+
+        const cyberChessPieceMeta = {
+            king: { label: "Core Node", short: "CN", symbol: "K" },
+            queen: { label: "SOC Director", short: "SOC", symbol: "Q" },
+            rook: { label: "Firewall", short: "FW", symbol: "R" },
+            bishop: { label: "Zero-Day", short: "0D", symbol: "B" },
+            knight: { label: "Packet Knight", short: "PK", symbol: "N" },
+            pawn: { label: "Script Kiddie", short: "SK", symbol: "P" }
+        };
 
         const arenaThemes = {
             mixed: {
@@ -1810,17 +1859,21 @@
                     else updateScore(-150, true);
                     document.getElementById("p-trivia-context").innerText = correct
                         ? `Correct. +${triviaPoints} points. Loading the next email...`
-                        : `Incorrect. The best answer was "${t.opts[t.c]}". ${t.why} -150 points. Loading the next email...`;
+                        : `Incorrect. The best answer was "${t.opts[t.c]}". ${t.why} -150 points. Another trivia question is loading for this same email.`;
                     document.getElementById("p-trivia-context").className = `text-sm ${correct ? "text-emerald-400" : "text-red-400"}`;
                     Array.from(container.children).forEach(child => {
                         child.setAttribute("disabled", "true");
                         child.classList.add("opacity-60");
                     });
                     setTimeout(() => {
-                        currentPhishIndex++;
-                        awaitingTrivia = false;
-                        showView("phishing-game-view");
-                        loadEmail();
+                        if (correct) {
+                            currentPhishIndex++;
+                            awaitingTrivia = false;
+                            showView("phishing-game-view");
+                            loadEmail();
+                        } else {
+                            loadPhishingTrivia();
+                        }
                     }, 900);
                 };
                 container.appendChild(b);
@@ -2249,6 +2302,7 @@
                 player: { x: stage.clientWidth / 2, y: stage.clientHeight / 2, radius: 14, speed: 250, health: 100, hitCooldown: 0, damageReduction: 0 },
                 enemies: [],
                 projectiles: [],
+                enemyProjectiles: [],
                 xpOrbs: [],
                 rings: [],
                 pulses: [],
@@ -2259,6 +2313,8 @@
                 nextXp: getArenaLevelTarget(1),
                 elapsed: 0,
                 spawnTimer: 0,
+                minibossSpawned: false,
+                bossSpawned: false,
                 won: false,
                 paused: false,
                 lastTs: null,
@@ -2300,9 +2356,11 @@
                 arenaState.spawnTimer += dt;
                 moveArenaPlayer(dt);
                 spawnArenaEnemies();
+                checkArenaBossSpawns();
                 updateArenaAbilities(dt);
                 updateArenaEnemies(dt);
                 updateArenaProjectiles(dt);
+                updateEnemyProjectiles(dt);
                 collectArenaXp();
                 tickArenaEffects(dt);
                 checkArenaLevelUp();
@@ -2339,10 +2397,10 @@
 
         function spawnArenaEnemies() {
             const elapsed = arenaState.elapsed;
-            const interval = Math.max(0.46, 1.28 - elapsed * 0.006);
+            const interval = Math.max(0.58, 1.38 - elapsed * 0.0048);
             if (arenaState.spawnTimer < interval) return;
             arenaState.spawnTimer = 0;
-            const spawnCount = elapsed > 70 ? 3 : elapsed > 35 ? 2 : 1;
+            const spawnCount = elapsed > 120 ? 3 : elapsed > 65 ? 2 : 1;
             const layer = document.getElementById("arena-layer");
 
             for (let i = 0; i < spawnCount; i++) {
@@ -2362,11 +2420,11 @@
                 else if (elapsed > 62 && roll < 0.48) type = "trojan";
 
                 const profile = {
-                    adware: { radius: 11, speed: 34 + elapsed * 0.4, health: elapsed > 55 ? 3 : elapsed > 20 ? 2 : 1, xp: 1, css: "arena-enemy" },
-                    worm: { radius: 8, speed: 56 + elapsed * 0.45, health: 1, xp: 2, css: "arena-enemy-worm" },
-                    spyware: { radius: 9, speed: 38 + elapsed * 0.35, health: 2, xp: 2, css: "arena-enemy-spyware" },
-                    ransomware: { radius: 15, speed: 24 + elapsed * 0.28, health: elapsed > 60 ? 8 : 6, xp: 4, css: "arena-enemy-ransomware" },
-                    trojan: { radius: 13, speed: 31 + elapsed * 0.32, health: elapsed > 70 ? 8 : 6, xp: 5, css: "arena-enemy-trojan" }
+                    adware: { radius: 11, speed: 30 + elapsed * 0.32, health: elapsed > 65 ? 2 : 1, xp: 1, css: "arena-enemy" },
+                    worm: { radius: 8, speed: 48 + elapsed * 0.36, health: 1, xp: 2, css: "arena-enemy-worm" },
+                    spyware: { radius: 9, speed: 34 + elapsed * 0.28, health: 2, xp: 2, css: "arena-enemy-spyware" },
+                    ransomware: { radius: 15, speed: 22 + elapsed * 0.22, health: elapsed > 90 ? 7 : 5, xp: 4, css: "arena-enemy-ransomware" },
+                    trojan: { radius: 13, speed: 28 + elapsed * 0.24, health: elapsed > 100 ? 7 : 5, xp: 5, css: "arena-enemy-trojan" }
                 }[type];
 
                 const enemy = {
@@ -2382,6 +2440,45 @@
                 layer.appendChild(enemy.el);
                 arenaState.enemies.push(enemy);
             }
+        }
+
+        function checkArenaBossSpawns() {
+            if (!arenaState.minibossSpawned && arenaState.elapsed >= 150) {
+                arenaState.minibossSpawned = true;
+                spawnArenaBossEnemy("miniboss");
+                addArenaLog("Mini-boss breach detected at 2.5 minutes.");
+            }
+            if (!arenaState.bossSpawned && arenaState.elapsed >= 300) {
+                arenaState.bossSpawned = true;
+                spawnArenaBossEnemy("boss");
+                addArenaLog("Final boss breach detected at 5 minutes.");
+            }
+        }
+
+        function spawnArenaBossEnemy(kind) {
+            const layer = document.getElementById("arena-layer");
+            const x = arenaState.width / 2;
+            const y = 42;
+            const boss = kind === "boss"
+                ? { type: "boss", radius: 31, speed: 28, health: 64, xpValue: 12, css: "arena-enemy-boss", projectileCooldown: 1.45, projectileTimer: 0, damage: 2 }
+                : { type: "miniboss", radius: 20, speed: 34, health: 28, xpValue: 8, css: "arena-enemy-miniboss", projectileCooldown: 1.85, projectileTimer: 0, damage: 1 };
+            const enemy = {
+                x,
+                y,
+                radius: boss.radius,
+                speed: boss.speed,
+                health: boss.health,
+                maxHealth: boss.health,
+                xpValue: boss.xpValue,
+                type: boss.type,
+                isBossEnemy: true,
+                projectileCooldown: boss.projectileCooldown,
+                projectileTimer: 0,
+                damage: boss.damage,
+                el: createArenaEntity(boss.css, x, y)
+            };
+            layer.appendChild(enemy.el);
+            arenaState.enemies.push(enemy);
         }
 
         function updateArenaAbilities(dt) {
@@ -2665,9 +2762,17 @@
                 enemy.el.style.left = `${enemy.x}px`;
                 enemy.el.style.top = `${enemy.y}px`;
 
+                if (enemy.isBossEnemy) {
+                    enemy.projectileTimer += dt;
+                    if (enemy.projectileTimer >= enemy.projectileCooldown) {
+                        enemy.projectileTimer = 0;
+                        fireArenaEnemyProjectiles(enemy);
+                    }
+                }
+
                 const playerDist = Math.hypot(arenaState.player.x - enemy.x, arenaState.player.y - enemy.y);
                 if (playerDist < enemy.radius + arenaState.player.radius + 4 && arenaState.player.hitCooldown <= 0) {
-                    const baseDamage = enemy.type === "ransomware" ? 14 : enemy.type === "trojan" ? 18 : enemy.type === "worm" ? 7 : enemy.type === "spyware" ? 8 : 9;
+                    const baseDamage = enemy.type === "boss" ? 16 : enemy.type === "miniboss" ? 12 : enemy.type === "ransomware" ? 12 : enemy.type === "trojan" ? 15 : enemy.type === "worm" ? 6 : enemy.type === "spyware" ? 7 : 8;
                     const finalDamage = Math.max(4, Math.round(baseDamage * (1 - (arenaState.player.damageReduction || 0))));
                     arenaState.player.health = Math.max(0, arenaState.player.health - finalDamage);
                     arenaState.player.hitCooldown = 0.8;
@@ -2680,6 +2785,28 @@
                     if (Math.hypot(enemy.x - ring.x, enemy.y - ring.y) < enemy.radius + 12) damageArenaEnemy(enemy, ring.damage);
                 });
             });
+        }
+
+        function fireArenaEnemyProjectiles(enemy) {
+            const layer = document.getElementById("arena-layer");
+            const shots = enemy.type === "boss" ? 5 : 3;
+            const spread = enemy.type === "boss" ? 0.85 : 0.55;
+            const baseAngle = Math.atan2(arenaState.player.y - enemy.y, arenaState.player.x - enemy.x);
+            for (let i = 0; i < shots; i++) {
+                const angle = shots === 1 ? baseAngle : baseAngle - spread / 2 + (spread * i / (shots - 1));
+                const projectile = {
+                    x: enemy.x,
+                    y: enemy.y,
+                    vx: Math.cos(angle),
+                    vy: Math.sin(angle),
+                    speed: enemy.type === "boss" ? 180 : 155,
+                    radius: enemy.type === "boss" ? 7 : 5,
+                    damage: enemy.type === "boss" ? 12 : 8,
+                    el: createArenaEntity(enemy.type === "boss" ? "enemy-projectile-boss" : "enemy-projectile", enemy.x, enemy.y)
+                };
+                layer.appendChild(projectile.el);
+                arenaState.enemyProjectiles.push(projectile);
+            }
         }
 
         function updateArenaProjectiles(dt) {
@@ -2718,10 +2845,37 @@
             });
         }
 
+        function updateEnemyProjectiles(dt) {
+            arenaState.enemyProjectiles.slice().forEach(projectile => {
+                projectile.x += projectile.vx * projectile.speed * dt;
+                projectile.y += projectile.vy * projectile.speed * dt;
+                projectile.el.style.left = `${projectile.x}px`;
+                projectile.el.style.top = `${projectile.y}px`;
+
+                const dist = Math.hypot(projectile.x - arenaState.player.x, projectile.y - arenaState.player.y);
+                if (dist < projectile.radius + arenaState.player.radius + 2 && arenaState.player.hitCooldown <= 0) {
+                    const finalDamage = Math.max(4, Math.round(projectile.damage * (1 - (arenaState.player.damageReduction || 0))));
+                    arenaState.player.health = Math.max(0, arenaState.player.health - finalDamage);
+                    arenaState.player.hitCooldown = 0.55;
+                    addArenaLog(`Projectile hit for ${finalDamage} integrity.`);
+                    projectile.el.remove();
+                    arenaState.enemyProjectiles = arenaState.enemyProjectiles.filter(item => item !== projectile);
+                    return;
+                }
+
+                if (projectile.x < -20 || projectile.x > arenaState.width + 20 || projectile.y < -20 || projectile.y > arenaState.height + 20) {
+                    projectile.el.remove();
+                    arenaState.enemyProjectiles = arenaState.enemyProjectiles.filter(item => item !== projectile);
+                }
+            });
+        }
+
         function damageArenaEnemy(enemy, amount) {
             if (!arenaState || !arenaState.enemies.includes(enemy)) return;
+            if (enemy.defeated) return;
             enemy.health -= amount;
             if (enemy.health <= 0) {
+                enemy.defeated = true;
                 enemy.el.remove();
                 arenaState.enemies = arenaState.enemies.filter(item => item !== enemy);
                 const orb = {
@@ -2733,6 +2887,9 @@
                 };
                 document.getElementById("arena-layer").appendChild(orb.el);
                 arenaState.xpOrbs.push(orb);
+                if (enemy.type === "boss") {
+                    finishArenaRun(true);
+                }
             }
         }
 
@@ -2947,7 +3104,6 @@
         }
 
         function updateArenaHud() {
-            document.getElementById("arena-score").innerText = totalScore;
             document.getElementById("arena-health").innerText = arenaState.player.health;
             document.getElementById("arena-xp").innerText = arenaState.xp;
             document.getElementById("arena-next-xp").innerText = arenaState.nextXp;
@@ -2955,9 +3111,387 @@
             updateArenaSidebar();
         }
 
-        function finishArenaRun() {
+        function buildCyberChessInitialBoard() {
+            const board = Array.from({ length: 8 }, () => Array(8).fill(null));
+            const order = ["rook", "knight", "bishop", "queen", "king", "bishop", "knight", "rook"];
+            order.forEach((type, col) => {
+                board[0][col] = { type, color: "black" };
+                board[7][col] = { type, color: "white" };
+            });
+            for (let col = 0; col < 8; col++) {
+                board[1][col] = { type: "pawn", color: "black" };
+                board[6][col] = { type: "pawn", color: "white" };
+            }
+            return board;
+        }
+
+        function renderCyberChess() {
+            if (!cyberChessState) return;
+            renderCyberChessBoard();
+            renderCyberChessQuestionPanel();
+            renderCyberChessLog();
+            document.getElementById("cyber-chess-score").innerText = cyberChessScore;
+            document.getElementById("cyber-chess-turn").innerText = cyberChessState.turn === "white" ? "Blue Team" : "Red Team";
+            document.getElementById("cyber-chess-status").innerText = getCyberChessStatusText();
+        }
+
+        function getCyberChessStatusText() {
+            if (!cyberChessState) return "Offline";
+            if (cyberChessState.gameOver) return "Match complete";
+            if (cyberChessState.pendingMove) return "Answer to authorize move";
+            if (cyberChessState.selected) return "Choose a highlighted destination";
+            if (isCyberChessKingInCheck(cyberChessState.board, cyberChessState.turn)) return "In check";
+            return "Select a piece";
+        }
+
+        function renderCyberChessBoard() {
+            const boardEl = document.getElementById("cyber-chess-board");
+            boardEl.innerHTML = "";
+            const legalMoveKeys = new Set(cyberChessState.legalMoves.map(move => `${move.toRow}-${move.toCol}`));
+            const captureKeys = new Set(cyberChessState.legalMoves.filter(move => move.capture).map(move => `${move.toRow}-${move.toCol}`));
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const square = document.createElement("button");
+                    square.type = "button";
+                    square.className = `cyber-square ${(row + col) % 2 === 0 ? "cyber-square-light" : "cyber-square-dark"}`;
+                    if (cyberChessState.selected && cyberChessState.selected.row === row && cyberChessState.selected.col === col) square.classList.add("cyber-square-selected");
+                    if (legalMoveKeys.has(`${row}-${col}`)) square.classList.add(captureKeys.has(`${row}-${col}`) ? "cyber-square-capture" : "cyber-square-legal");
+                    square.onclick = () => handleCyberChessSquareClick(row, col);
+                    const piece = cyberChessState.board[row][col];
+                    if (piece) {
+                        const pieceEl = document.createElement("div");
+                        pieceEl.className = `cyber-piece ${piece.color === "white" ? "cyber-piece-white" : "cyber-piece-black"}`;
+                        pieceEl.innerHTML = `<div class="cyber-piece-symbol">${cyberChessPieceMeta[piece.type].symbol}</div><div class="cyber-piece-label">${cyberChessPieceMeta[piece.type].short}</div>`;
+                        square.appendChild(pieceEl);
+                    }
+                    if (col === 0 || row === 7) {
+                        const coord = document.createElement("div");
+                        coord.className = "cyber-square-coord";
+                        coord.innerText = `${col === 0 ? 8 - row : ""}${row === 7 ? "abcdefgh"[col] : ""}`.trim();
+                        square.appendChild(coord);
+                    }
+                    boardEl.appendChild(square);
+                }
+            }
+        }
+
+        function renderCyberChessQuestionPanel() {
+            const text = document.getElementById("cyber-chess-question-text");
+            const options = document.getElementById("cyber-chess-question-options");
+            const feedback = document.getElementById("cyber-chess-question-feedback");
+            options.innerHTML = "";
+            if (!cyberChessState.pendingMove || !cyberChessState.currentQuestion) {
+                text.innerText = "Choose a legal move to load a cybersecurity question.";
+                feedback.innerText = "Correct answer: move executes. Wrong answer: the move stays locked until the question is answered correctly.";
+                feedback.className = "text-sm text-slate-500";
+                return;
+            }
+            text.innerText = cyberChessState.currentQuestion.q;
+            cyberChessState.currentQuestion.opts.forEach((opt, index) => {
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "w-full text-left p-4 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 hover:border-pink-500 transition-all";
+                button.innerText = opt;
+                button.onclick = () => answerCyberChessQuestion(index);
+                options.appendChild(button);
+            });
+            feedback.innerText = cyberChessState.questionFeedback || `Pending move: ${formatCyberChessMove(cyberChessState.pendingMove)}. Answer correctly to deploy it.`;
+            feedback.className = `text-sm ${cyberChessState.questionFeedback ? "text-red-300" : "text-pink-300"}`;
+        }
+
+        function renderCyberChessLog() {
+            const log = document.getElementById("cyber-chess-log");
+            log.innerHTML = cyberChessState.log.map(item => `<div>${item}</div>`).join("");
+        }
+
+        function handleCyberChessSquareClick(row, col) {
+            if (!cyberChessState || cyberChessState.gameOver) return;
+            if (cyberChessState.pendingMove) return;
+            const piece = cyberChessState.board[row][col];
+            const ownPiece = piece && piece.color === cyberChessState.turn;
+            const chosenMove = cyberChessState.legalMoves.find(move => move.toRow === row && move.toCol === col);
+
+            if (cyberChessState.selected && chosenMove) {
+                cyberChessState.pendingMove = chosenMove;
+                cyberChessState.currentQuestion = getNextCyberChessQuestion();
+                cyberChessState.questionFeedback = null;
+                renderCyberChess();
+                return;
+            }
+
+            if (ownPiece) {
+                cyberChessState.selected = { row, col };
+                cyberChessState.legalMoves = getCyberChessLegalMovesForPiece(cyberChessState.board, row, col);
+            } else {
+                cyberChessState.selected = null;
+                cyberChessState.legalMoves = [];
+            }
+            renderCyberChess();
+        }
+
+        function getNextCyberChessQuestion() {
+            const available = cyberChessQuestionBank.filter(question => !cyberChessState.usedQuestions.includes(question.q));
+            const source = available.length ? available : cyberChessQuestionBank;
+            const selected = source[Math.floor(Math.random() * source.length)];
+            cyberChessState.usedQuestions.push(selected.q);
+            if (cyberChessState.usedQuestions.length > 12) cyberChessState.usedQuestions = [selected.q];
+            return shuffleQuestionAnswers(selected);
+        }
+
+        function answerCyberChessQuestion(index) {
+            if (!cyberChessState || !cyberChessState.currentQuestion || !cyberChessState.pendingMove) return;
+            const correct = index === cyberChessState.currentQuestion.c;
+            if (correct) {
+                const move = cyberChessState.pendingMove;
+                const movingPiece = cyberChessState.board[move.fromRow][move.fromCol];
+                const captureBonus = move.capture ? 150 : 0;
+                updateScore(250 + captureBonus);
+                cyberChessScore = totalScore;
+                cyberChessState.board = applyCyberChessMove(cyberChessState.board, move);
+                cyberChessState.log.unshift(`${movingPiece.color === "white" ? "Blue" : "Red"} Team deployed ${cyberChessPieceMeta[movingPiece.type].label} to ${toCyberChessCoord(move.toRow, move.toCol)}.${move.capture ? " Capture confirmed." : ""}`);
+                cyberChessState.selected = null;
+                cyberChessState.legalMoves = [];
+                cyberChessState.pendingMove = null;
+                cyberChessState.currentQuestion = null;
+                cyberChessState.questionFeedback = null;
+                cyberChessState.turn = cyberChessState.turn === "white" ? "black" : "white";
+                finalizeCyberChessTurn();
+            } else {
+                updateScore(-100);
+                cyberChessScore = totalScore;
+                cyberChessState.currentQuestion = getNextCyberChessQuestion();
+                cyberChessState.questionFeedback = "Incorrect. The move remains locked. New question loaded. -100 points.";
+            }
+            renderCyberChess();
+        }
+
+        function finalizeCyberChessTurn() {
+            const sideToMove = cyberChessState.turn;
+            const allMoves = getAllCyberChessLegalMoves(cyberChessState.board, sideToMove);
+            const checked = isCyberChessKingInCheck(cyberChessState.board, sideToMove);
+            if (!allMoves.length) {
+                cyberChessState.gameOver = true;
+                if (checked) {
+                    const winner = sideToMove === "white" ? "Red Team" : "Blue Team";
+                    updateScore(2000);
+                    cyberChessScore = totalScore;
+                    cyberChessState.log.unshift(`${winner} delivered checkmate.`);
+                    finishCyberChessMatch(`${winner} achieved checkmate and seized the network core.`);
+                } else {
+                    cyberChessState.log.unshift("The board locked into stalemate.");
+                    finishCyberChessMatch("The match ended in stalemate after both sides exhausted safe moves.");
+                }
+                return;
+            }
+            if (checked) cyberChessState.log.unshift(`${sideToMove === "white" ? "Blue" : "Red"} Team is in check.`);
+        }
+
+        function finishCyberChessMatch(summary) {
+            document.getElementById("final-display-content").innerText = `Cyber Chess Complete: ${summary} Final board score: ${cyberChessScore}.`;
+            endGame("cyberchess");
+        }
+
+        function getCyberChessLegalMovesForPiece(board, row, col) {
+            const piece = board[row][col];
+            if (!piece) return [];
+            const pseudoMoves = getCyberChessPseudoMoves(board, row, col, piece);
+            return pseudoMoves.filter(move => {
+                const nextBoard = applyCyberChessMove(board, move);
+                return !isCyberChessKingInCheck(nextBoard, piece.color);
+            });
+        }
+
+        function getAllCyberChessLegalMoves(board, color) {
+            const moves = [];
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const piece = board[row][col];
+                    if (piece && piece.color === color) moves.push(...getCyberChessLegalMovesForPiece(board, row, col));
+                }
+            }
+            return moves;
+        }
+
+        function getCyberChessPseudoMoves(board, row, col, piece) {
+            const moves = [];
+            const forward = piece.color === "white" ? -1 : 1;
+            if (piece.type === "pawn") {
+                const oneStep = row + forward;
+                if (isCyberChessInside(oneStep, col) && !board[oneStep][col]) {
+                    moves.push(makeCyberChessMove(row, col, oneStep, col, board));
+                    const startRow = piece.color === "white" ? 6 : 1;
+                    const twoStep = row + forward * 2;
+                    if (row === startRow && !board[twoStep][col]) moves.push(makeCyberChessMove(row, col, twoStep, col, board));
+                }
+                [-1, 1].forEach(offset => {
+                    const targetCol = col + offset;
+                    if (!isCyberChessInside(oneStep, targetCol)) return;
+                    const target = board[oneStep][targetCol];
+                    if (target && target.color !== piece.color) moves.push(makeCyberChessMove(row, col, oneStep, targetCol, board));
+                });
+                return moves;
+            }
+            if (piece.type === "knight") {
+                [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]].forEach(([dr, dc]) => {
+                    const nr = row + dr;
+                    const nc = col + dc;
+                    if (!isCyberChessInside(nr, nc)) return;
+                    const target = board[nr][nc];
+                    if (!target || target.color !== piece.color) moves.push(makeCyberChessMove(row, col, nr, nc, board));
+                });
+                return moves;
+            }
+            if (piece.type === "king") {
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        if (dr === 0 && dc === 0) continue;
+                        const nr = row + dr;
+                        const nc = col + dc;
+                        if (!isCyberChessInside(nr, nc)) continue;
+                        const target = board[nr][nc];
+                        if (!target || target.color !== piece.color) moves.push(makeCyberChessMove(row, col, nr, nc, board));
+                    }
+                }
+                return moves;
+            }
+            const vectors = piece.type === "rook"
+                ? [[1, 0], [-1, 0], [0, 1], [0, -1]]
+                : piece.type === "bishop"
+                    ? [[1, 1], [1, -1], [-1, 1], [-1, -1]]
+                    : [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]];
+            vectors.forEach(([dr, dc]) => {
+                let nr = row + dr;
+                let nc = col + dc;
+                while (isCyberChessInside(nr, nc)) {
+                    const target = board[nr][nc];
+                    if (!target) {
+                        moves.push(makeCyberChessMove(row, col, nr, nc, board));
+                    } else {
+                        if (target.color !== piece.color) moves.push(makeCyberChessMove(row, col, nr, nc, board));
+                        break;
+                    }
+                    nr += dr;
+                    nc += dc;
+                }
+            });
+            return moves;
+        }
+
+        function makeCyberChessMove(fromRow, fromCol, toRow, toCol, board) {
+            const movingPiece = board[fromRow][fromCol];
+            const target = board[toRow][toCol];
+            return {
+                fromRow,
+                fromCol,
+                toRow,
+                toCol,
+                capture: !!target,
+                promotion: movingPiece.type === "pawn" && (toRow === 0 || toRow === 7)
+            };
+        }
+
+        function applyCyberChessMove(board, move) {
+            const nextBoard = board.map(row => row.map(piece => piece ? { ...piece } : null));
+            const piece = { ...nextBoard[move.fromRow][move.fromCol] };
+            nextBoard[move.fromRow][move.fromCol] = null;
+            if (move.promotion) piece.type = "queen";
+            nextBoard[move.toRow][move.toCol] = piece;
+            return nextBoard;
+        }
+
+        function isCyberChessKingInCheck(board, color) {
+            const kingPos = findCyberChessKing(board, color);
+            if (!kingPos) return false;
+            return isCyberChessSquareAttacked(board, kingPos.row, kingPos.col, color === "white" ? "black" : "white");
+        }
+
+        function findCyberChessKing(board, color) {
+            for (let row = 0; row < 8; row++) {
+                for (let col = 0; col < 8; col++) {
+                    const piece = board[row][col];
+                    if (piece && piece.color === color && piece.type === "king") return { row, col };
+                }
+            }
+            return null;
+        }
+
+        function isCyberChessSquareAttacked(board, row, col, attackerColor) {
+            try {
+                const pawnRow = row + (attackerColor === "white" ? 1 : -1);
+                [-1, 1].forEach(offset => {
+                    const pawnCol = col + offset;
+                    if (isCyberChessInside(pawnRow, pawnCol)) {
+                        const piece = board[pawnRow][pawnCol];
+                        if (piece && piece.color === attackerColor && piece.type === "pawn") throw new Error("__pawn_attack__");
+                    }
+                });
+                [[-2, -1], [-2, 1], [-1, -2], [-1, 2], [1, -2], [1, 2], [2, -1], [2, 1]].forEach(([dr, dc]) => {
+                    const nr = row + dr;
+                    const nc = col + dc;
+                    if (!isCyberChessInside(nr, nc)) return;
+                    const piece = board[nr][nc];
+                    if (piece && piece.color === attackerColor && piece.type === "knight") throw new Error("__knight_attack__");
+                });
+                [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dr, dc]) => {
+                    let nr = row + dr;
+                    let nc = col + dc;
+                    while (isCyberChessInside(nr, nc)) {
+                        const piece = board[nr][nc];
+                        if (piece) {
+                            if (piece.color === attackerColor && (piece.type === "rook" || piece.type === "queen")) throw new Error("__line_attack__");
+                            break;
+                        }
+                        nr += dr;
+                        nc += dc;
+                    }
+                });
+                [[1, 1], [1, -1], [-1, 1], [-1, -1]].forEach(([dr, dc]) => {
+                    let nr = row + dr;
+                    let nc = col + dc;
+                    while (isCyberChessInside(nr, nc)) {
+                        const piece = board[nr][nc];
+                        if (piece) {
+                            if (piece.color === attackerColor && (piece.type === "bishop" || piece.type === "queen")) throw new Error("__diag_attack__");
+                            break;
+                        }
+                        nr += dr;
+                        nc += dc;
+                    }
+                });
+                for (let dr = -1; dr <= 1; dr++) {
+                    for (let dc = -1; dc <= 1; dc++) {
+                        if (dr === 0 && dc === 0) continue;
+                        const nr = row + dr;
+                        const nc = col + dc;
+                        if (!isCyberChessInside(nr, nc)) continue;
+                        const piece = board[nr][nc];
+                        if (piece && piece.color === attackerColor && piece.type === "king") throw new Error("__king_attack__");
+                    }
+                }
+                return false;
+            } catch (error) {
+                if (String(error.message || error).startsWith("__")) return true;
+                throw error;
+            }
+        }
+
+        function isCyberChessInside(row, col) {
+            return row >= 0 && row < 8 && col >= 0 && col < 8;
+        }
+
+        function toCyberChessCoord(row, col) {
+            return `${"abcdefgh"[col]}${8 - row}`;
+        }
+
+        function formatCyberChessMove(move) {
+            return `${toCyberChessCoord(move.fromRow, move.fromCol)} -> ${toCyberChessCoord(move.toRow, move.toCol)}`;
+        }
+
+        function finishArenaRun(won = false) {
             if (!arenaState) return;
-            document.getElementById("final-display-content").innerText = `Threat Arena Down: ${arenaThemes[arenaThemeKey].label} route survived ${Math.floor(arenaState.elapsed)} seconds, reached level ${arenaState.level}, and brought ${Object.keys(arenaState.abilities).filter(key => key !== "basic").length} utilities online before the malware swarm broke through.`;
+            document.getElementById("final-display-content").innerText = won
+                ? `Threat Arena Victory: You survived ${Math.floor(arenaState.elapsed)} seconds, defeated the final virus boss, and saved your brother from the evil computer viruses. Good job.`
+                : `Threat Arena Down: ${arenaThemes[arenaThemeKey].label} route survived ${Math.floor(arenaState.elapsed)} seconds, reached level ${arenaState.level}, and brought ${Object.keys(arenaState.abilities).filter(key => key !== "basic").length} utilities online before the malware swarm broke through.`;
             stopArenaGame();
             endGame("arena");
         }
@@ -2983,6 +3517,8 @@
                             ? "Password Mission Complete"
                             : mode === "arena"
                                 ? "Threat Arena Complete"
+                                : mode === "cyberchess"
+                                    ? "Cyber Chess Complete"
                                 : "Mission Complete";
                 document.getElementById("win-title").className = "text-5xl font-black text-emerald-400 uppercase tracking-tighter";
                 document.getElementById("best-player-tag").classList.add("hidden");
